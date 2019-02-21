@@ -6,7 +6,4 @@ White yet equal power!
 
 Human History Month!
 
-Conflict is growth!
-
 Tasty tasy shrimp, none of which I've licked
-

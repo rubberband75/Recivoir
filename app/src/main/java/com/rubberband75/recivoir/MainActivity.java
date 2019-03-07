@@ -32,9 +32,11 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         SharedPreferences userDetails = this.getSharedPreferences("userdetails", MODE_PRIVATE);
-        String name = userDetails.getString("username", "");
 
-        EditText nameInput = (EditText) findViewById(R.id.name_input);
-        nameInput.setText(name);
+        if(userDetails.contains("username")) {
+            String name = userDetails.getString("username", null);
+            EditText nameInput = (EditText) findViewById(R.id.name_input);
+            nameInput.setText(name);
+        }
     }
 }

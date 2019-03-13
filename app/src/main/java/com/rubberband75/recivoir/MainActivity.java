@@ -3,9 +3,11 @@ package com.rubberband75.recivoir;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
+    private static String TAG = "Recivoir - MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor edit = userDetails.edit();
         edit.putString("username", name);
         edit.apply();
+        Log.d(TAG, "Saving name to shared preferences");
+
     }
 
     @Override
@@ -37,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
             String name = userDetails.getString("username", null);
             EditText nameInput = (EditText) findViewById(R.id.name_input);
             nameInput.setText(name);
+            Log.d(TAG, "Loading name from shared preferences");
+        } else {
+            Log.d(TAG, "No name saved in shared preferences");
         }
     }
 }

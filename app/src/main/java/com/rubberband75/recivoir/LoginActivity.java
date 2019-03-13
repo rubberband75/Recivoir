@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -38,6 +39,7 @@ import static android.Manifest.permission.READ_CONTACTS;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+    private static String TAG = "Recivoir - LoginActivity";
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -144,6 +146,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
+        Log.v(TAG, "Attempting Login...");
         if (mAuthTask != null) {
             return;
         }
@@ -192,6 +195,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
+        Log.v(TAG, "checking if email is valid");
         return email.contains("@");
     }
 
@@ -312,6 +316,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 // Simulate network access.
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
+                Log.e(TAG, "Error while checking authentication against a network service");
                 return false;
             }
 
@@ -333,6 +338,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+                Log.i(TAG, "Successfully authenticated");
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

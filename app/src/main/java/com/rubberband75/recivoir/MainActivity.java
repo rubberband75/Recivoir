@@ -1,5 +1,6 @@
 package com.rubberband75.recivoir;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,5 +47,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Log.d(TAG, "No name saved in shared preferences");
         }
+    }
+
+
+    public void startLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        Log.d(TAG, "Starting Login Activity");
+        startActivity(intent);
     }
 }

@@ -35,6 +35,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation "com.google.truth:truth:0.43"
     testImplementation 'org.assertj:assertj-core:3.6.2'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
 
     // Optional -- Robolectric environment
     testImplementation 'androidx.test:core:1.1.0'

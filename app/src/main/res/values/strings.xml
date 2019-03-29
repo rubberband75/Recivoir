@@ -14,4 +14,5 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="default_web_client_id">377484357405-l5f4eus7t1q976s2ti7ob44shc7n38th.apps.googleusercontent.com</string>
 </resources>

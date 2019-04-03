@@ -3,10 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".RecipeListActivity"
+    tools:showIn="@layout/activity_recipe_list">
 
     <Button
-        android:id="@+id/addbutton"
+        android:id="@+id/createRecipeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="154dp"
@@ -17,12 +20,13 @@
         app:layout_constraintBottom_toTopOf="@+id/searchRecipe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.031" />
 
     <ListView
         android:id="@+id/recipe_listview"
         android:layout_width="395dp"
-        android:layout_height="578dp"
+        android:layout_height="523dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
@@ -32,16 +36,23 @@
 
     <EditText
         android:id="@+id/searchRecipe"
-        android:layout_width="wrap_content"
+        android:layout_width="261dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginEnd="99dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
         android:ems="10"
         android:inputType="text"
         android:text="Search for  a Recipe"
-        app:layout_constraintBottom_toTopOf="@+id/recipe_listview"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/searchRecipesButton"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/searchRecipesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="26dp"
+        android:text="Search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createRecipeButton" />
 
 </android.support.constraint.ConstraintLayout>

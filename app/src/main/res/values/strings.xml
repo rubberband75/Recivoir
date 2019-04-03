@@ -14,4 +14,13 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_add_recipe">AddRecipeActivity</string>
+    <string name="title_activity_recipe_list">RecipeListActivity</string>
+    <string name="title_activity_view_recipe">ViewRecipeActivity</string>
+    <string name="title_activity_start_screen">StartScreenActivity</string>
+    <string name="title_activity_main_screen">MainScreenActivity</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_add_recipe_ingredients">AddRecipeIngredientsActivity</string>
+    <string name="title_activity_add_recipe_instructions">AddRecipeInstructionsActivity</string>
+    <string name="title_activity_add_recipe_notes">AddRecipeNotesActivity</string>
 </resources>

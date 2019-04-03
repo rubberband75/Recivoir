@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".AddRecipeActivity"
+    tools:showIn="@layout/activity_add_recipe">
 
     <ListView
         android:id="@+id/recipeIngredients"
@@ -23,18 +26,18 @@
         android:layout_height="189dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/recipeNotes"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/addNote"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/saveButton"
+        android:id="@+id/saveIngredientButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="43dp"
-        android:layout_marginBottom="33dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginBottom="16dp"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -43,25 +46,14 @@
         android:id="@+id/discardButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="72dp"
-        android:layout_marginBottom="33dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginBottom="16dp"
         android:text="Discard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ListView
-        android:id="@+id/recipeNotes"
-        android:layout_width="395dp"
-        android:layout_height="87dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/saveButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <EditText
-        android:id="@+id/inputRecipeTitle"
+        android:id="@+id/addRecipeTitle"
         android:layout_width="wrap_content"
         android:layout_height="34dp"
         android:layout_marginStart="99dp"
@@ -114,9 +106,25 @@
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/inputRecipeTitle"
+        app:layout_constraintBottom_toTopOf="@+id/addRecipeTitle"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/addNote"
+        android:layout_width="389dp"
+        android:layout_height="92dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="12dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Insert Notes"
+        app:layout_constraintBottom_toTopOf="@+id/saveIngredientButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

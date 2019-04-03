@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rubberband75.recivoir">
-
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
@@ -15,8 +14,44 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".AddRecipeNotesActivity"
+            android:label="@string/title_activity_add_recipe_notes"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".AddRecipeInstructionsActivity"
+            android:label="@string/title_activity_add_recipe_instructions"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddRecipeIngredientsActivity"
+            android:label="@string/title_activity_add_recipe_ingredients"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SearchActivity"
+            android:label="@string/title_activity_search"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainScreenActivity"
+            android:label="@string/title_activity_main_screen"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".StartScreenActivity"
+            android:label="@string/title_activity_start_screen"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ViewRecipeActivity"
+            android:label="@string/title_activity_view_recipe"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RecipeListActivity"
+            android:label="@string/title_activity_recipe_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddRecipeActivity"
+            android:label="@string/title_activity_add_recipe"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

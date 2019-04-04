@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
 
-    private static String TAG = "[Recivoir]MainActivity:";
+    private static final String TAG = "[Recivoir]MainActivity:";
+    private static final int RC_SIGN_IN = 9001;
 
     GoogleApiClient mGoogleApiClient;
 
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity
 
     public void forceSignIn(){
         Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, RC_SIGN_IN);
     }
 
     public void signOut(){
@@ -186,4 +187,20 @@ public class MainActivity extends AppCompatActivity
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        
+        if (requestCode == RC_SIGN_IN) {
+            Log.d(TAG, "onActivityResult: Returning from sign in attempt");
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+            if(account != null) {
+                updateUI(account);
+            } else {
+                forceSignIn();
+            }
+
+        }
+    }
 }
+

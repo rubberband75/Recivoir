@@ -11,14 +11,13 @@ tools:context=".LoginActivity">
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_marginTop="32dp"
-    android:text="Wecome"
+    android:text="Welcome to Recivoir"
     android:textAlignment="center"
     android:textSize="30sp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.5"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:text="Welcome" />
+    app:layout_constraintTop_toTopOf="parent"  />
 
 <TextView
     android:id="@+id/login_splash_helper"

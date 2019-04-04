@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -48,8 +49,9 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                launchNewRecipeActivity();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
             }
         });
 
@@ -116,6 +118,10 @@ public class MainActivity extends AppCompatActivity
         ((TextView) navHeader.findViewById(R.id.drawer_header_email)).setText(account.getEmail());
     }
 
+    private void launchNewRecipeActivity() {
+        startActivity(new Intent(this, AddRecipeActivity.class));
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -142,6 +148,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Toast.makeText(this, "TODO: Make Setting Activity", Toast.LENGTH_SHORT).show();
             return true;
         }
 
@@ -155,15 +162,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_new_recipes) {
-            // Handle the camera action
+            startActivity(new Intent(this, AddRecipeActivity.class));
         } else if (id == R.id.nav_my_recipes) {
-
+            Toast.makeText(this, "TODO: Make My_Recipes Activity", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_my_friends) {
-
+            Toast.makeText(this, "TODO: Make My_Friends Activity", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_find_recipes) {
-
+            Toast.makeText(this, "TODO: Make Find_Recipes Activity", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_settings) {
-
+            Toast.makeText(this, "TODO: Make Setting Activity", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_sign_out) {
             signOut();
         }

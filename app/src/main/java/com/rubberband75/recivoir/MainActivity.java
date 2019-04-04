@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity
 
     GoogleApiClient mGoogleApiClient;
 
-    NavigationView navigationView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -82,7 +80,7 @@ public class MainActivity extends AppCompatActivity
             forceSignIn();
         }
 
-//        FirebaseApp.initializeApp(this);
+        FirebaseApp.initializeApp(this);
     }
 
 
@@ -110,9 +108,11 @@ public class MainActivity extends AppCompatActivity
 
         ((TextView) findViewById(R.id.greeting_text)).setText("Welcome " + account.getGivenName());
 
-//        View headerView = navigationView.getHeaderView(0);
-//        ((TextView) headerView.findViewById(R.id.drawer_header_name)).setText(account.getDisplayName());
-//        ((TextView) headerView.findViewById(R.id.drawer_header_email)).setText(account.getEmail());
+        NavigationView navDrawer= (NavigationView) findViewById(R.id.nav_view);
+        View navHeader = navDrawer.getHeaderView(0);
+
+        ((TextView) navHeader.findViewById(R.id.drawer_header_name)).setText(account.getDisplayName());
+        ((TextView) navHeader.findViewById(R.id.drawer_header_email)).setText(account.getEmail());
     }
 
     @Override

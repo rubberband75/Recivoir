@@ -1,8 +1,7 @@
 package com.rubberband75.recivoir;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import com.rubberband75.recivoir.TestDocument;
+
 
 public class Database {
 
@@ -10,16 +9,15 @@ public class Database {
         return "database test";
     }
 
-    static public String getName(String id) {
-        return "First Last Name";
-    }
 
-    static public ArrayList<TestDocument> getDocuments(){
-        ArrayList<TestDocument> docs = new ArrayList<TestDocument>();
+    static public ArrayList<Recipe> getRecipes(){
+        ArrayList<Recipe> docs = new ArrayList<Recipe>();
 
-        TestDocument doc1 = new TestDocument();
-        TestDocument doc2 = new TestDocument();
-        TestDocument doc3 = new TestDocument();
+        Recipe doc1 = new Recipe();
+        Recipe doc2 = new Recipe();
+        doc2.title = "Title Two!!";
+        Recipe doc3 = new Recipe();
+        doc3.title = "Title 3";
 
         docs.add(doc1);
         docs.add(doc2);
@@ -32,8 +30,11 @@ public class Database {
         ArrayList<User> people = new ArrayList<>();
 
         User p1 = new User();
+        p1.firstName = "Chandler";
         User p2 = new User();
+        p2.firstName = "Sam";
         User p3 = new User();
+        p3.firstName = "Michael";
 
         people.add(p1);
         people.add(p2);
@@ -42,12 +43,24 @@ public class Database {
         return people;
     }
 
-    static public TestDocument getRecipe() {
-        return new TestDocument();
+
+
+    static public Recipe getRecipe(String recipeId) {
+        return new Recipe();
     }
 
-    static public User getUser() {
+    static public User getCurrentUser() {
         return new User();
     }
+
+    static public User findUser(String email){
+        return new User();
+    }
+
+    static public User getUser(String userId) {return new User(); }
+
+    static public void saveRecipe(String title, String ingredients, String steps, String notes, Boolean isPublic) { }
+
+    static public void editRecipe(String recipeID, String title, String ingredients, String steps, String notes, Boolean isPublic) {}
 
 }

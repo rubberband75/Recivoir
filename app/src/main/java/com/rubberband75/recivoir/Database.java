@@ -47,7 +47,7 @@ public class Database {
      * @return Recipe
      */
     static public Recipe getRecipe(String recipeId) {
-        return new Recipe();
+        return new Recipe("Awesome Recipe Title", "Burger\nbuns", "but the burger in the bun\nenjoy", "Add ketchup if you want, I don't care", true);
     }
 
     /**

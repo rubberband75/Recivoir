@@ -84,7 +84,7 @@ public class Recipe {
     }
 
     /**
-     * Sets the title of recipe
+     * Sets the notes of recipe
      * @param notes Title of recipe
      */
     public void setNotes(String notes) {

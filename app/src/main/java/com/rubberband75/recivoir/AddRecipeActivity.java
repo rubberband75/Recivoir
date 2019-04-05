@@ -32,7 +32,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_recipe);
+        setContentView(R.layout.activity_new_recipe);
     }
 
     public void saveRecipe(View view) {
@@ -42,45 +42,45 @@ public class AddRecipeActivity extends AppCompatActivity {
 
           /* This works, it just needs to be adapted to the right inputs */
 
-//        EditText titleInput = (EditText) findViewById(R.id.new_title_input);
-//        EditText ingredientsInput = (EditText) findViewById(R.id.new_ingredients_input);
-//        EditText stepsInput = (EditText) findViewById(R.id.new_steps_input);
-//        EditText notesInput = (EditText) findViewById(R.id.new_notes_input);
-//
-//        String titleText = titleInput.getText().toString();
-//        String ingredientsText = ingredientsInput.getText().toString();
-//        String stepsText = stepsInput.getText().toString();
-//        String notesText = notesInput.getText().toString();
-//
-//        if(titleText.isEmpty() || ingredientsText.isEmpty() || stepsText.isEmpty()) {
-//            Toast.makeText(this, "Missing Info", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        Map<String, Object> recipe = new HashMap<>();
-//        recipe.put(TITLE_KEY, titleText);
-//        recipe.put(INGREDIENTS_KEY, ingredientsText);
-//        recipe.put(STEPS_KEY, stepsText);
-//        recipe.put(NOTES_KEY, notesText);
-//
-//
-//        Toast.makeText(this, "Saving Recipe", Toast.LENGTH_SHORT).show();
-//
-//        db.collection(FIRESTORE_COLLECTION)
-//                .add(recipe)
-//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                    @Override
-//                    public void onSuccess(DocumentReference documentReference) {
-//                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-//                        finish();
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w(TAG, "Error adding document", e);
-//                    }
-//                });
+        EditText titleInput = (EditText) findViewById(R.id.new_title_input);
+        EditText ingredientsInput = (EditText) findViewById(R.id.new_ingredients_input);
+        EditText stepsInput = (EditText) findViewById(R.id.new_steps_input);
+        EditText notesInput = (EditText) findViewById(R.id.new_notes_input);
+
+        String titleText = titleInput.getText().toString();
+        String ingredientsText = ingredientsInput.getText().toString();
+        String stepsText = stepsInput.getText().toString();
+        String notesText = notesInput.getText().toString();
+
+        if(titleText.isEmpty() || ingredientsText.isEmpty() || stepsText.isEmpty()) {
+            Toast.makeText(this, "Missing Info", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Map<String, Object> recipe = new HashMap<>();
+        recipe.put(TITLE_KEY, titleText);
+        recipe.put(INGREDIENTS_KEY, ingredientsText);
+        recipe.put(STEPS_KEY, stepsText);
+        recipe.put(NOTES_KEY, notesText);
+
+
+        Toast.makeText(this, "Saving Recipe", Toast.LENGTH_SHORT).show();
+
+        db.collection(FIRESTORE_COLLECTION)
+                .add(recipe)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
     }
 
     public void discardRecipe(View view) {

@@ -1,8 +1,10 @@
 package com.rubberband75.recivoir;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -11,7 +13,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 public class Database {
@@ -64,39 +69,6 @@ public class Database {
     }
 
     /**
-     * Gets all public recipes
-     * @return Recipe
-     */
-    static public void getPublicRecipes() {
-
-        db.collection("public")
-            .get()
-            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Log.d(TAG, "getPublicRecipes:" + document.getId() + " => " + document.getData().get("title"));
-                        }
-                    } else {
-                        Log.w(TAG, "Error getting documents.", task.getException());
-                    }
-                }
-            });
-
-
-        ArrayList<Recipe> rlist = getRecipes();
-
-        for (Recipe recipe : rlist){
-            Log.d(TAG, "getExampleRecipes: " + recipe.getTitle());
-        }
-
-
-//        return new Recipe("Awesome Recipe Title", "Burger\nbuns", "but the burger in the bun\nenjoy", "Add ketchup if you want, I don't care", true);
-    }
-
-    /**
      * Gets current User
      * @return User
      */
@@ -141,7 +113,7 @@ public class Database {
      */
     static public void editRecipe(String recipeID, String title, String ingredients, String steps, String notes, Boolean isPublic) {}
 
-    private static FirebaseFirestore db;
+    public static FirebaseFirestore db;
     static public void initializeDB(Context context) {
         Log.d(TAG, "Initializing Database");
 
@@ -149,5 +121,29 @@ public class Database {
         db = FirebaseFirestore.getInstance();
 
     }
+
+
+
+    static public Task getPublicRecipesTask(){
+        return db.collection("public").get();
+    }
+
+    static public ArrayList<Recipe> getRecipesFromTask(Task<QuerySnapshot> task){
+        ArrayList<Recipe> recipes = new ArrayList<>();
+
+        if (task.isSuccessful()) {
+            for (QueryDocumentSnapshot document : task.getResult()) {
+                Map<String, Object> data = document.getData();
+
+                Recipe r = new Recipe(data.get("title").toString(), data.get("ingredients").toString(), data.get("steps").toString(), data.get("notes").toString(), true);
+                recipes.add(r);
+            }
+        } else {
+            Log.w(TAG, "Error getting documents.", task.getException());
+        }
+        return recipes;
+    }
+
+
 
 }

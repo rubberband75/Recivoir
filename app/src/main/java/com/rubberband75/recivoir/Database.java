@@ -70,19 +70,27 @@ public class Database {
     static public void getPublicRecipes() {
 
         db.collection("public")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d(TAG, "getPublicRecipes:" + document.getId() + " => " + document.getData().get("title"));
                         }
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
                     }
-                });
+                }
+            });
+
+
+        ArrayList<Recipe> rlist = getRecipes();
+
+        for (Recipe recipe : rlist){
+            Log.d(TAG, "getExampleRecipes: " + recipe.getTitle());
+        }
 
 
 //        return new Recipe("Awesome Recipe Title", "Burger\nbuns", "but the burger in the bun\nenjoy", "Add ketchup if you want, I don't care", true);

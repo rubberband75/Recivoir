@@ -9,7 +9,10 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -125,7 +128,7 @@ public class Database {
 
 
     static public Task getPublicRecipesTask(){
-        return db.collection("public").get();
+        return db.collection("public").whereEqualTo("isPublic", true).get();
     }
 
     static public ArrayList<Recipe> getRecipesFromTask(Task<QuerySnapshot> task){
@@ -142,6 +145,26 @@ public class Database {
             Log.w(TAG, "Error getting documents.", task.getException());
         }
         return recipes;
+    }
+
+    static public void logPublic(){
+        FirebaseFirestore db = Database.db;
+
+        Task<QuerySnapshot> task = db.collection("public").whereEqualTo("isPublic", true).get();
+
+            task.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d(TAG, "getPublicRecipes:" + document.getId() + " => " + document.getData().get("title"));
+                        }
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
+                    }
+                }
+            });
     }
 
 

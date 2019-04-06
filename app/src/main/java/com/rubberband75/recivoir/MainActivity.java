@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity
             forceSignIn();
         }
 
-        FirebaseApp.initializeApp(this);
+        Database.initializeDB(this);
     }
 
 

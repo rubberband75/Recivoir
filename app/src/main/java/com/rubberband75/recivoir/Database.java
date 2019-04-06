@@ -1,9 +1,22 @@
 package com.rubberband75.recivoir;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.util.Log;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 
 
 public class Database {
+
+    static public final String TAG = "[Recivoir][Database]:";
 
     static public String test() {
         return "database test";
@@ -51,6 +64,31 @@ public class Database {
     }
 
     /**
+     * Gets all public recipes
+     * @return Recipe
+     */
+    static public void getPublicRecipes() {
+
+        db.collection("public")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+
+
+//        return new Recipe("Awesome Recipe Title", "Burger\nbuns", "but the burger in the bun\nenjoy", "Add ketchup if you want, I don't care", true);
+    }
+
+    /**
      * Gets current User
      * @return User
      */
@@ -94,5 +132,14 @@ public class Database {
      * @param isPublic Public setting of recipe
      */
     static public void editRecipe(String recipeID, String title, String ingredients, String steps, String notes, Boolean isPublic) {}
+
+    private static FirebaseFirestore db;
+    static public void initializeDB(Context context) {
+        Log.d(TAG, "Initializing Database");
+
+        FirebaseApp.initializeApp(context);
+        db = FirebaseFirestore.getInstance();
+
+    }
 
 }

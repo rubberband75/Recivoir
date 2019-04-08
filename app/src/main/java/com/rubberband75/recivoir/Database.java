@@ -7,9 +7,12 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -18,13 +21,21 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 public class Database {
 
-    static public final String TAG = "[Recivoir][Database]:";
+    private static final String TAG = "[Recivoir][Database]:";
+
+    private static final String RECIPES_COLLECTION = "recipes";
+    private static final String TITLE_KEY = "title";
+    private static final String INGREDIENTS_KEY = "ingredients";
+    private static final String STEPS_KEY = "steps";
+    private static final String NOTES_KEY = "notes";
+
 
     static public String test() {
         return "database test";
@@ -95,6 +106,7 @@ public class Database {
      */
     static public User getUser(String userId) {return new User(); }
 
+
     /**
      * Saves recipe to user's list
      * @param title Title of recipe
@@ -103,7 +115,19 @@ public class Database {
      * @param notes Notes for recipe
      * @param isPublic Public setting of recipe
      */
-    static public void saveRecipe(String title, String ingredients, String steps, String notes, Boolean isPublic) { }
+    static public Task saveRecipe(String title, String ingredients, String steps, String notes, Boolean isPublic) {
+
+        Map<String, Object> recipe = new HashMap<>();
+        recipe.put(TITLE_KEY, title);
+        recipe.put(INGREDIENTS_KEY, ingredients);
+        recipe.put(STEPS_KEY, steps);
+        recipe.put(NOTES_KEY, notes);
+
+        Task task = db.collection(RECIPES_COLLECTION).add(recipe);
+
+        return task;
+    }
+
 
     /**
      * Allows user to edit recipe
@@ -122,7 +146,6 @@ public class Database {
 
         FirebaseApp.initializeApp(context);
         db = FirebaseFirestore.getInstance();
-
     }
 
 
@@ -133,7 +156,6 @@ public class Database {
 
     static public ArrayList<Recipe> getRecipesFromTask(Task<QuerySnapshot> task){
         ArrayList<Recipe> recipes = new ArrayList<>();
-
         if (task.isSuccessful()) {
             for (QueryDocumentSnapshot document : task.getResult()) {
                 Map<String, Object> data = document.getData();
@@ -155,16 +177,15 @@ public class Database {
             task.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Log.d(TAG, "getPublicRecipes:" + document.getId() + " => " + document.getData().get("title"));
-                        }
-                    } else {
-                        Log.w(TAG, "Error getting documents.", task.getException());
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, "getPublicRecipes:" + document.getId() + " => " + document.getData().get("title"));
                     }
+                } else {
+                    Log.w(TAG, "Error getting documents.", task.getException());
                 }
-            });
+            }
+        });
     }
 
 

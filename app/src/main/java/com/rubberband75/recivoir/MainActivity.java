@@ -81,12 +81,12 @@ public class MainActivity extends AppCompatActivity
             Log.d(TAG, "Signed In");
             Log.d(TAG, "Firebase User: " + user.getUid());
             updateUI(account);
+            Database.initializeDB(this);
+
         } else {
             Log.d(TAG, "Forcing Login");
             forceSignIn();
         }
-
-        Database.initializeDB(this);
     }
 
 

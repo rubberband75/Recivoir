@@ -167,13 +167,13 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_new_recipes) {
             startActivity(new Intent(this, AddRecipeActivity.class));
         } else if (id == R.id.nav_my_recipes) {
-            Toast.makeText(this, "TODO: Make My_Recipes Activity", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, MyRecipesActivity.class));
         } else if (id == R.id.nav_my_friends) {
-            Toast.makeText(this, "TODO: Make My_Friends Activity", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, MyFriendsActivity.class));
         } else if (id == R.id.nav_find_recipes) {
             startActivity(new Intent(this, FindRecipesActivity.class));
         } else if (id == R.id.nav_settings) {
-            Toast.makeText(this, "TODO: Make Setting Activity", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.nav_sign_out) {
             signOut();
         }

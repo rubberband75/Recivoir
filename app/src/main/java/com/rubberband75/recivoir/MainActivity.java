@@ -27,6 +27,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
@@ -73,10 +75,11 @@ public class MainActivity extends AppCompatActivity
                 .build();
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-
-        if(account != null) {
+        if(account != null && user != null) {
             Log.d(TAG, "Signed In");
+            Log.d(TAG, "Firebase User: " + user.getUid());
             updateUI(account);
         } else {
             Log.d(TAG, "Forcing Login");

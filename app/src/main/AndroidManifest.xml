@@ -13,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FindRecipesActivity"></activity>
+        <activity
+            android:name=".MyFriendsActivity"
+            android:label="@string/title_activity_my_friends"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".FindRecipesActivity" />
         <activity android:name=".AddRecipeActivity" />
         <activity
             android:name=".MainActivity"

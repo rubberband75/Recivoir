@@ -70,8 +70,8 @@
 
             <EditText
                 android:id="@+id/new_ingredients_input"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="263dp"
+                android:layout_height="95dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:ems="10"
@@ -92,8 +92,8 @@
 
             <EditText
                 android:id="@+id/new_steps_input"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="268dp"
+                android:layout_height="90dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:ems="10"
@@ -114,8 +114,8 @@
 
             <EditText
                 android:id="@+id/new_notes_input"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="272dp"
+                android:layout_height="74dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:ems="10"
@@ -123,6 +123,12 @@
                 android:inputType="textMultiLine"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/new_notes_label" />
+
+            <CheckBox
+                android:id="@+id/publicBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Available to Public?" />
 
             <Button
                 android:id="@+id/new_recipe_save_button"

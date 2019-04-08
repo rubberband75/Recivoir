@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -26,7 +25,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -43,7 +41,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -81,12 +79,12 @@ public class MainActivity extends AppCompatActivity
             Log.d(TAG, "Signed In");
             Log.d(TAG, "Firebase User: " + user.getUid());
             updateUI(account);
+            Database.initializeDB(this);
+
         } else {
             Log.d(TAG, "Forcing Login");
             forceSignIn();
         }
-
-        Database.initializeDB(this);
     }
 
 
@@ -138,7 +136,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main2, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -167,13 +165,13 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_new_recipes) {
             startActivity(new Intent(this, AddRecipeActivity.class));
         } else if (id == R.id.nav_my_recipes) {
-            Toast.makeText(this, "TODO: Make My_Recipes Activity", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, MyRecipesActivity.class));
         } else if (id == R.id.nav_my_friends) {
-            Toast.makeText(this, "TODO: Make My_Friends Activity", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, MyFriendsActivity.class));
         } else if (id == R.id.nav_find_recipes) {
             startActivity(new Intent(this, FindRecipesActivity.class));
         } else if (id == R.id.nav_settings) {
-            Toast.makeText(this, "TODO: Make Setting Activity", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.nav_sign_out) {
             signOut();
         }

@@ -11,6 +11,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -30,11 +32,19 @@ public class Database {
 
     private static final String TAG = "[Recivoir][Database]:";
 
-    private static final String RECIPES_COLLECTION = "recipes";
-    private static final String TITLE_KEY = "title";
-    private static final String INGREDIENTS_KEY = "ingredients";
-    private static final String STEPS_KEY = "steps";
-    private static final String NOTES_KEY = "notes";
+    private static final String COLLECTION_RECIPES = "recipes";
+    private static final String RECIPE_TITLE_KEY = "title";
+    private static final String RECIPE_INGREDIENTS_KEY = "ingredients";
+    private static final String RECIPE_STEPS_KEY = "steps";
+    private static final String RECIPE_NOTES_KEY = "notes";
+    private static final String RECIPE_IS_PUBLIC_KEY = "isPublic";
+    private static final String RECIPE_AUTHOR_KEY = "authorID";
+    private static final String RECIPE_AUTHOR_NAME_KEY = "authorName";
+
+
+
+    private static FirebaseUser currentUser;
+    private static FirebaseFirestore db;
 
 
     static public String test() {
@@ -118,12 +128,15 @@ public class Database {
     static public Task saveRecipe(String title, String ingredients, String steps, String notes, Boolean isPublic) {
 
         Map<String, Object> recipe = new HashMap<>();
-        recipe.put(TITLE_KEY, title);
-        recipe.put(INGREDIENTS_KEY, ingredients);
-        recipe.put(STEPS_KEY, steps);
-        recipe.put(NOTES_KEY, notes);
+        recipe.put(RECIPE_TITLE_KEY, title);
+        recipe.put(RECIPE_INGREDIENTS_KEY, ingredients);
+        recipe.put(RECIPE_STEPS_KEY, steps);
+        recipe.put(RECIPE_NOTES_KEY, notes);
+        recipe.put(RECIPE_IS_PUBLIC_KEY, isPublic);
+        recipe.put(RECIPE_AUTHOR_KEY, currentUser.getUid());
+        recipe.put(RECIPE_AUTHOR_NAME_KEY, currentUser.getDisplayName());
 
-        Task task = db.collection(RECIPES_COLLECTION).add(recipe);
+        Task task = db.collection(COLLECTION_RECIPES).add(recipe);
 
         return task;
     }
@@ -140,18 +153,29 @@ public class Database {
      */
     static public void editRecipe(String recipeID, String title, String ingredients, String steps, String notes, Boolean isPublic) {}
 
-    public static FirebaseFirestore db;
-    static public void initializeDB(Context context) {
-        Log.d(TAG, "Initializing Database");
 
+    /**
+     * Initializes the shared firebase connection
+     * @param context
+     */
+    public static void initializeDB(Context context) {
         FirebaseApp.initializeApp(context);
         db = FirebaseFirestore.getInstance();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        Log.d(TAG, "Initializing Database: " + currentUser.getProviderId());
     }
 
 
+    /**
+     * Returns current Firebase User
+     */
+    static public FirebaseUser getCurrentFirebaseUser() {
+        return currentUser;
+    }
+
 
     static public Task getPublicRecipesTask(){
-        return db.collection("public").whereEqualTo("isPublic", true).get();
+        return db.collection(COLLECTION_RECIPES).whereEqualTo("isPublic", true).get();
     }
 
     static public ArrayList<Recipe> getRecipesFromTask(Task<QuerySnapshot> task){
@@ -170,9 +194,7 @@ public class Database {
     }
 
     static public void logPublic(){
-        FirebaseFirestore db = Database.db;
-
-        Task<QuerySnapshot> task = db.collection("public").whereEqualTo("isPublic", true).get();
+        Task<QuerySnapshot> task = db.collection(COLLECTION_RECIPES).whereEqualTo("isPublic", true).get();
 
             task.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override

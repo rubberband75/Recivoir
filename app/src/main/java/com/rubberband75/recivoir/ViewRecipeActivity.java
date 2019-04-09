@@ -24,6 +24,8 @@ public class ViewRecipeActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        
     }
 
 }

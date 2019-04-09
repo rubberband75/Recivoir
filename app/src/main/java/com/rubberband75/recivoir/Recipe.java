@@ -44,11 +44,6 @@ public class Recipe {
     }
 
     /**
-     * Gets ingredients
-     * @return ingredients
-     */
-
-    /**
      * Gets title
      * @return title
      */

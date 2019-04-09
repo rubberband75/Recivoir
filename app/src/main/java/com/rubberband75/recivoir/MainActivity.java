@@ -204,6 +204,7 @@ public class MainActivity extends AppCompatActivity
             GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
             if(account != null) {
                 updateUI(account);
+                Database.initializeDB(this);
             } else {
                 forceSignIn();
             }

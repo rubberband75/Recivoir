@@ -1,5 +1,7 @@
 package com.rubberband75.recivoir;
 
+import com.google.firebase.firestore.DocumentSnapshot;
+
 /**
  * @author Chandler, Michael, Sam
  * @version 1.0
@@ -8,13 +10,14 @@ package com.rubberband75.recivoir;
  */
 public class Recipe {
 
-    public String recipeId = "r000001";
-    public String title = "Cool Recipe Title";
-    public String ingredients = "chips\ncorn\ncheese\nbeans\ntortilla";
-    public String steps = "make the food";
-    public String notes = "you don't need any notes";
-    public String author = "u000123";
-    public Boolean isPublic = true;
+    public String recipeID = "";
+    public String title = "";
+    public String ingredients = "";
+    public String steps = "";
+    public String notes = "";
+    public Boolean isPublic = false;
+    public String authorID = "";
+    public String authonName = "";
 
     /**
      * Recipe Constructor
@@ -27,20 +30,33 @@ public class Recipe {
         this.isPublic = isPublic;
     }
 
+
+    public Recipe(DocumentSnapshot document) {
+        this.recipeID = document.getId();
+        this.title = document.get(Database.RECIPE_TITLE_KEY).toString();
+        this.ingredients = document.get(Database.RECIPE_INGREDIENTS_KEY).toString();
+        this.steps = document.get(Database.RECIPE_STEPS_KEY).toString();
+        this.notes = document.get(Database.RECIPE_NOTES_KEY).toString();
+        this.isPublic = (boolean) document.get(Database.RECIPE_IS_PUBLIC_KEY);
+        this.authorID = document.get(Database.RECIPE_AUTHOR_KEY).toString();
+        this.authonName = document.get(Database.RECIPE_AUTHOR_NAME_KEY).toString();
+    }
+
+
     /**
      * Gets recipeId
-     * @return recipeId
+     * @return recipeID
      */
-    public String getRecipeId() {
-        return recipeId;
+    public String getRecipeID() {
+        return recipeID;
     }
 
     /**
      * Sets the recipeId of recipe
-     * @param recipeId ID of recipe
+     * @param recipeID ID of recipe
      */
-    public void setRecipeId(String recipeId) {
-        this.recipeId = recipeId;
+    public void setRecipeID(String recipeID) {
+        this.recipeID = recipeID;
     }
 
     /**
@@ -123,4 +139,28 @@ public class Recipe {
     public void setIsPublic(Boolean isPublic) {
         this.isPublic = isPublic;
     }
+
+
+    /**
+     * @return
+     */
+    public String getAuthorID() { return authorID; }
+
+
+    /**
+     * @param authorID
+     */
+    public void setAuthorID(String authorID) { this.authorID = authorID; }
+
+
+    /**
+     * @return
+     */
+    public String getAuthonName() { return authonName; }
+
+
+    /**
+     * @param authonName
+     */
+    public void setAuthonName(String authonName) { this.authonName = authonName; }
 }

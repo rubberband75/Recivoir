@@ -24,9 +24,10 @@ public class MyRecipesActivity extends AppCompatActivity {
         // Then call the addOnCompleteListener() as seen below
         // You will
 
-        Database.getPublicRecipesTask().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        Database.getMyRecipes().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                Log.d(TAG, "onComplete: getMyRecipes()");
                 //Then within this, call the appropriate get____fromTask(task) function
                 //If it's a list of recipes, it's this
                 //But there will also be one for Users

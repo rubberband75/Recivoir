@@ -234,7 +234,12 @@ public class Database {
 
 
     static public Task getPublicRecipesTask(){
-        return db.collection(COLLECTION_RECIPES).whereEqualTo("isPublic", true).get();
+        return db.collection(COLLECTION_RECIPES).whereEqualTo(RECIPE_IS_PUBLIC_KEY, true).get();
+    }
+
+    static public Task getMyRecipes() {
+        Log.d(TAG, "getMyRecipes(where author == " + currentUser.getUserID()+")");
+        return db.collection(COLLECTION_RECIPES).whereEqualTo(RECIPE_AUTHOR_KEY, currentUser.getUserID()).get();
     }
 
     static public ArrayList<Recipe> getRecipesFromTask(Task<QuerySnapshot> task){

@@ -28,6 +28,27 @@ public class Recipe {
     }
 
     /**
+     * Gets recipeId
+     * @return recipeId
+     */
+    public String getRecipeId() {
+        return recipeId;
+    }
+
+    /**
+     * Sets the recipeId of recipe
+     * @param recipeId ID of recipe
+     */
+    public void setRecipeId(String recipeId) {
+        this.recipeId = recipeId;
+    }
+
+    /**
+     * Gets ingredients
+     * @return ingredients
+     */
+
+    /**
      * Gets title
      * @return title
      */
@@ -47,6 +68,7 @@ public class Recipe {
      * Gets ingredients
      * @return ingredients
      */
+
     public String getIngredients() {
         return ingredients;
     }

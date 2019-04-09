@@ -67,7 +67,7 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
         edit = (Button) findViewById(R.id.editRecipeButton);
         edit.setOnClickListener(this);
 
-        delete = (Button) findViewById(R.id.deleteRecipeButton);
+        delete = (Button) findViewById(R.id.editDeleteButton);
         delete.setOnClickListener(this);
 
         back = (Button) findViewById(R.id.editBackButton);
@@ -77,11 +77,12 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
     public void onClick (View view) {
         switch (view.getId()) {
             case R.id.editRecipeButton:
-                Intent editScreen = new Intent(getApplicationContext(),EditRecipeActivity.class)
-                editScreen.putExtra();
-                editScreen.putExtra();
-                editScreen.putExtra();
-                editScreen.putExtra();
+                Intent editScreen = new Intent(getApplicationContext(),EditRecipeActivity.class);
+                editScreen.putExtra("RECIPE_TITLE",title_text);
+                editScreen.putExtra(findViewById(R.id.recipeIngredientsView));
+                editScreen.putExtra(instructionsText);
+                editScreen.putExtra(notesText);
+                startActivity(editScreen);
                 break;
             case R.id.deleteRecipeButton:
                 break;

@@ -36,16 +36,15 @@ public class RecipeListActivity extends AppCompatActivity implements View.OnClic
 
         recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-                  ItemClicked item = parent.getItemAtPosition(position).toString();
-
-                  Intent intent = new Intent(Activity.this, ViewRecipeActivity.class);
+                  Log.i("HelloListView", "You clicked item: " + id + "at position:" + position);
+                  Intent intent = new Intent();
+                  intent.setClass(this, ViewRecipeActivity.class);
+                  intent.putExtra("position",position);
+                  intent.putExtra("id",id);
                   startActivity(intent);
             }
         });
 
-        public ItemClicked getItem(int position) {
-            return items.get(position);
-        }
     }
 }
 

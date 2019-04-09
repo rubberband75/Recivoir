@@ -23,17 +23,17 @@ public class MyFriendsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_friends);
 
-        Database.getUsers().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        Database.getMyFriends().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Log.d(TAG, "onComplete: getMyRecipes()");
+                Log.d(TAG, "onComplete: getMyFriends()");
                 //Then within this, call the appropriate get____fromTask(task) function
                 //If it's a list of recipes, it's this
                 //But there will also be one for Users
-                ArrayList<Recipe> recipes = Database.getRecipesFromTask(task);
+                ArrayList<User> friends = Database.getFriendsFromTask(task);
 
-                for(Recipe r : recipes) {
-                    Log.d(TAG, "onComplete: " + r.getTitle());
+                for(User friend : friends) {
+                    Log.d(TAG, "onComplete: " + friend.getUserID());
                 }
 
             }

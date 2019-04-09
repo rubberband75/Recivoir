@@ -257,4 +257,24 @@ public class Database {
         return recipes;
     }
 
+    static public Task getMyFriends() {
+        Log.d(TAG, "getMyFriends(where author == " + currentUser.getUserID()+")");
+        return db.collection(COLLECTION_USERS).whereEqualTo(RECIPE_AUTHOR_KEY, currentUser.getUserID()).get();
+    }
+
+    static public ArrayList<User> getFriendsFromTask(Task<QuerySnapshot> task){
+        ArrayList<User> friends = new ArrayList<>();
+        if (task.isSuccessful()) {
+            for (QueryDocumentSnapshot document : task.getResult()) {
+                Map<String, Object> data = document.getData();
+
+                User friend = new User();
+                friends.add(friend);
+            }
+        } else {
+            Log.w(TAG, "Error getting documents.", task.getException());
+        }
+        return friends;
+    }
+
 }

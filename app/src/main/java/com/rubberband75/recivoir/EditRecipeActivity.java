@@ -55,6 +55,11 @@ public class EditRecipeActivity extends AppCompatActivity implements View.OnClic
                 input.setIngredients(editIngredients);
                 input.setSteps(editSteps);
                 input.setNotes(editNotes);
+                break;
+            case R.id.editDeleteButton:
+                break;
+            case R.id.editBackButton:
+                break;
         }
     }
 

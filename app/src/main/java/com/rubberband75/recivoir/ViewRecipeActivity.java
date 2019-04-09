@@ -4,13 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-public class ViewRecipeActivity extends AppCompatActivity {
+public class ViewRecipeActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "[Recivoir]ViewRecipes";
+
+    Button edit;
+    Button delete;
+    Button back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +63,26 @@ public class ViewRecipeActivity extends AppCompatActivity {
             }
         });
 
+        edit = (Button) findViewById(R.id.editRecipeButton);
+        edit.setOnClickListener(this);
+
+        delete = (Button) findViewById(R.id.deleteRecipeButton);
+        delete.setOnClickListener(this);
+
+        back = (Button) findViewById(R.id.editBackButton);
+        back.setOnClickListener(this);
+    }
+
+    public void onClick (View view) {
+        switch (view.getId()) {
+            case R.id.editRecipeButton:
+                
+                break;
+            case R.id.deleteRecipeButton:
+                break;
+            case R.id.editBackButton:
+                break;
+        }
     }
 
 }

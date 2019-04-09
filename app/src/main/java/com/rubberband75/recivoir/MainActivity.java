@@ -150,6 +150,9 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Toast.makeText(this, "TODO: Make Setting Activity", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, ViewRecipeActivity.class);
+            intent.putExtra("recipeID", "d5hEGYQ2pztaqsD9VSLt");
+            startActivity(intent);
             return true;
         }
 

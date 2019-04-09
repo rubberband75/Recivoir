@@ -26,21 +26,21 @@ public class Database {
 
     private static final String TAG = "[Recivoir][Database]";
 
-    private static final String COLLECTION_USERS = "users";
-    private static final String USER_ID = "userID";
-    private static final String USER_NAME = "name";
-    private static final String USER_email = "email";
-    private static final String USER_recipes = "recipes";
-    private static final String USER_friends = "friends";
+    public static final String COLLECTION_USERS = "users";
+    public static final String USER_ID = "userID";
+    public static final String USER_NAME = "name";
+    public static final String USER_EMAIL = "email";
+    public static final String USER_recipes = "recipes";
+    public static final String USER_friends = "friends";
 
-    private static final String COLLECTION_RECIPES = "recipes";
-    private static final String RECIPE_TITLE_KEY = "title";
-    private static final String RECIPE_INGREDIENTS_KEY = "ingredients";
-    private static final String RECIPE_STEPS_KEY = "steps";
-    private static final String RECIPE_NOTES_KEY = "notes";
-    private static final String RECIPE_IS_PUBLIC_KEY = "isPublic";
-    private static final String RECIPE_AUTHOR_KEY = "authorID";
-    private static final String RECIPE_AUTHOR_NAME_KEY = "authorName";
+    public static final String COLLECTION_RECIPES = "recipes";
+    public static final String RECIPE_TITLE_KEY = "title";
+    public static final String RECIPE_INGREDIENTS_KEY = "ingredients";
+    public static final String RECIPE_STEPS_KEY = "steps";
+    public static final String RECIPE_NOTES_KEY = "notes";
+    public static final String RECIPE_IS_PUBLIC_KEY = "isPublic";
+    public static final String RECIPE_AUTHOR_KEY = "authorID";
+    public static final String RECIPE_AUTHOR_NAME_KEY = "authorName";
 
 
 
@@ -90,8 +90,8 @@ public class Database {
      * Gets chosen recipe from User's list of recipes
      * @return Recipe
      */
-    static public Recipe getRecipe(String recipeId) {
-        return new Recipe("Awesome Recipe Title", "Burger\nbuns", "but the burger in the bun\nenjoy", "Add ketchup if you want, I don't care", true);
+    static public Task getRecipe(final String recipeId) {
+        return db.collection(COLLECTION_RECIPES).document(recipeId).get();
     }
 
     /**
@@ -99,7 +99,7 @@ public class Database {
      * @return User
      */
     static public User getCurrentUser() {
-        return new User();
+        return currentUser;
     }
 
     /**
@@ -179,7 +179,7 @@ public class Database {
                         Map<String, Object> user = new HashMap<>();
                         user.put(USER_ID, currentFirebaseUser.getUid());
                         user.put(USER_NAME, currentFirebaseUser.getDisplayName());
-                        user.put(USER_email, currentFirebaseUser.getEmail());
+                        user.put(USER_EMAIL, currentFirebaseUser.getEmail());
                         user.put(USER_friends, new ArrayList<>());
                         user.put(USER_recipes, new ArrayList<>());
 //                        user.put("things", (new HashMap<String, Object>()).put("name", "asdf"));
@@ -222,7 +222,7 @@ public class Database {
         currentUser = new User();
         currentUser.setFullName(document.get(USER_NAME).toString());
         currentUser.setUserID(document.get(USER_ID).toString());
-        currentUser.setEmail(document.get(USER_email).toString());
+        currentUser.setEmail(document.get(USER_EMAIL).toString());
     }
 
     /**

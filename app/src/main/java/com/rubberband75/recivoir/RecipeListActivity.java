@@ -1,6 +1,7 @@
 package com.rubberband75.recivoir;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeListActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String TAG = "[Recivoir]RecipeList";
 
     ListView recipeListView;
     CustomAdapter mAdapter;
@@ -34,16 +37,30 @@ public class RecipeListActivity extends AppCompatActivity implements View.OnClic
         mAdapter = new CustomAdapter(this, data);
         recipeListView.setAdapter(mAdapter);
 
+
+        final Context context = this;
         recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-                  Log.i("HelloListView", "You clicked item: " + id + "at position:" + position);
-                  Intent intent = new Intent();
-                  intent.setClass(this, ViewRecipeActivity.class);
-                  intent.putExtra("position",position);
-                  intent.putExtra("id",id);
-                  startActivity(intent);
+                /*This was causing an error, so I commented it out*/
+                //ItemClicked item = parent.getItemAtPosition(position).toString();
+
+                Intent intent = new Intent(context, ViewRecipeActivity.class);
+                startActivity(intent);
             }
         });
+
+        //public ItemClicked getItem(int position) {
+        //    return items.get(position);
+        //}
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 }

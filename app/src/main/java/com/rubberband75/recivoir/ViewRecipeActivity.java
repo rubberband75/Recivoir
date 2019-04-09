@@ -27,21 +27,23 @@ public class ViewRecipeActivity extends AppCompatActivity {
             }
         });
 
-        Intent intent = getIntent();
+        String recipeID = "d5hEGYQ2pztaqsD9VSLt";
 
-        String titleText = Recipe.getTitle();
+        Recipe recipe = Database.getRecipe(recipeID);
+
+        String titleText = recipe.getTitle();
         TextView titleView = findViewById(R.id.recipeTitleView);
         titleView.setText(titleText);
 
-        String ingredientsText = Recipe.getIngredients();
+        String ingredientsText = recipe.getIngredients();
         TextView ingredientsView = findViewById(R.id.recipeIngredientsView);
         ingredientsView.setText(ingredientsText);
 
-        String instructionsText = Recipe.getSteps();
+        String instructionsText = recipe.getSteps();
         TextView instructionsView = findViewById(R.id.recipeInstructionsView);
         instructionsView.setText(instructionsText);
 
-        String notesText = Recipe.getNotes();
+        String notesText = recipe.getNotes();
         TextView notesView = findViewById(R.id.recipeNotesView);
         notesView.setText(notesText);
 

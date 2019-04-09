@@ -13,23 +13,12 @@
         android:layout_width="184dp"
         android:layout_height="34dp"
         android:layout_marginStart="175dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="177dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/recipeAuthorView"
-        android:layout_width="190dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="175dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="177dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipeTitleView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/editRecipeButton"
@@ -76,14 +65,13 @@
         android:layout_width="387dp"
         android:layout_height="106dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/recipeInstructionsView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipeAuthorView"
-        app:layout_constraintVertical_bias="0.095" />
+        app:layout_constraintTop_toBottomOf="@+id/recipeTitleView" />
 
     <TextView
         android:id="@+id/recipeInstructionsView"
@@ -91,7 +79,7 @@
         android:layout_height="163dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="52dp"
         app:layout_constraintBottom_toTopOf="@+id/recipeNotesView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -102,9 +90,10 @@
         android:layout_height="136dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="28dp"
         app:layout_constraintBottom_toTopOf="@+id/editRecipeButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

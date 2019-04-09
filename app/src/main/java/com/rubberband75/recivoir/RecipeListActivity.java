@@ -1,5 +1,6 @@
 package com.rubberband75.recivoir;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -33,13 +34,18 @@ public class RecipeListActivity extends AppCompatActivity implements View.OnClic
         mAdapter = new CustomAdapter(this, data);
         recipeListView.setAdapter(mAdapter);
 
-        recipeListView.setOnItemClickListener(this);
-    }
+        recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+                  ItemClicked item = parent.getItemAtPosition(position).toString();
 
-    public void onItemClick(AdapterView<?> 1, View v, int position, long id){
-        Log.i("HelloListView", "You clicked item: " + id + " at position:" + position);
-        Intent intent = new Intent();
-        intent.setClass(this,)
+                  Intent intent = new Intent(Activity.this, ViewRecipeActivity.class);
+                  startActivity(intent);
+            }
+        });
+
+        public ItemClicked getItem(int position) {
+            return items.get(position);
+        }
     }
 }
 

@@ -1,11 +1,13 @@
 package com.rubberband75.recivoir;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 public class ViewRecipeActivity extends AppCompatActivity {
 
@@ -25,7 +27,25 @@ public class ViewRecipeActivity extends AppCompatActivity {
             }
         });
 
-        
+        Intent intent = getIntent();
+
+        String titleText = Recipe.getTitle();
+        TextView titleView = findViewById(R.id.recipeTitleView);
+        titleView.setText(titleText);
+
+        String ingredientsText = Recipe.getIngredients();
+        TextView ingredientsView = findViewById(R.id.recipeIngredientsView);
+        ingredientsView.setText(ingredientsText);
+
+        String instructionsText = Recipe.getSteps();
+        TextView instructionsView = findViewById(R.id.recipeInstructionsView);
+        instructionsView.setText(instructionsText);
+
+        String notesText = Recipe.getNotes();
+        TextView notesView = findViewById(R.id.recipeNotesView);
+        notesView.setText(notesText);
+
+
     }
 
 }

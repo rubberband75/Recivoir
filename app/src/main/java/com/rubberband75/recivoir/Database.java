@@ -1,10 +1,8 @@
 package com.rubberband75.recivoir;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -13,24 +11,27 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
 public class Database {
 
-    private static final String TAG = "[Recivoir][Database]:";
+    private static final String TAG = "[Recivoir][Database]";
+
+    private static final String COLLECTION_USERS = "users";
+    private static final String USER_ID = "userID";
+    private static final String USER_NAME = "name";
+    private static final String USER_email = "email";
+    private static final String USER_recipes = "recipes";
+    private static final String USER_friends = "friends";
 
     private static final String COLLECTION_RECIPES = "recipes";
     private static final String RECIPE_TITLE_KEY = "title";
@@ -43,8 +44,9 @@ public class Database {
 
 
 
-    private static FirebaseUser currentUser;
+    private static FirebaseUser currentFirebaseUser;
     private static FirebaseFirestore db;
+    private static User currentUser;
 
 
     static public String test() {
@@ -70,11 +72,11 @@ public class Database {
         ArrayList<User> people = new ArrayList<>();
 
         User p1 = new User();
-        p1.firstName = "Chandler";
+        p1.name = "Chandler";
         User p2 = new User();
-        p2.firstName = "Sam";
+        p2.name = "Sam";
         User p3 = new User();
-        p3.firstName = "Michael";
+        p3.name = "Michael";
 
         people.add(p1);
         people.add(p2);
@@ -133,8 +135,8 @@ public class Database {
         recipe.put(RECIPE_STEPS_KEY, steps);
         recipe.put(RECIPE_NOTES_KEY, notes);
         recipe.put(RECIPE_IS_PUBLIC_KEY, isPublic);
-        recipe.put(RECIPE_AUTHOR_KEY, currentUser.getUid());
-        recipe.put(RECIPE_AUTHOR_NAME_KEY, currentUser.getDisplayName());
+        recipe.put(RECIPE_AUTHOR_KEY, currentFirebaseUser.getUid());
+        recipe.put(RECIPE_AUTHOR_NAME_KEY, currentFirebaseUser.getDisplayName());
 
         Task task = db.collection(COLLECTION_RECIPES).add(recipe);
 
@@ -161,16 +163,73 @@ public class Database {
     public static void initializeDB(Context context) {
         FirebaseApp.initializeApp(context);
         db = FirebaseFirestore.getInstance();
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        Log.d(TAG, "Initializing Database: " + currentUser.getProviderId());
+        currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        Log.d(TAG, "Initializing Database: " + currentFirebaseUser.getProviderId());
+
+        db.collection(COLLECTION_USERS).whereEqualTo(USER_ID, currentFirebaseUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    QuerySnapshot result = task.getResult();
+
+                    if(result.isEmpty()) {
+                        Log.d(TAG, "Adding user to database");
+
+                        Map<String, Object> user = new HashMap<>();
+                        user.put(USER_ID, currentFirebaseUser.getUid());
+                        user.put(USER_NAME, currentFirebaseUser.getDisplayName());
+                        user.put(USER_email, currentFirebaseUser.getEmail());
+                        user.put(USER_friends, new ArrayList<>());
+                        user.put(USER_recipes, new ArrayList<>());
+//                        user.put("things", (new HashMap<String, Object>()).put("name", "asdf"));
+
+                        db.collection(COLLECTION_USERS).add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        Log.d(TAG, "Successfully added user: " + documentSnapshot.get(USER_NAME));
+                                        setCurrentUser(documentSnapshot);
+                                    }
+                                });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding user", e);
+                            }
+                        });
+
+                    } else if(result.size() == 1){
+                        DocumentSnapshot document = result.getDocuments().get(0);
+                        Log.d(TAG, "retrieved user: " + document.get(USER_NAME));
+                        setCurrentUser(document);
+
+                    } else {
+                        Log.w(TAG, "gettingUser: Multiple Users for ID: " + currentFirebaseUser.getUid());
+                    }
+                } else {
+                    Log.d(TAG, "Error getting user: ", task.getException());
+                }
+            }
+        });
+
     }
 
+    private static void setCurrentUser(DocumentSnapshot document){
+        currentUser = new User();
+        currentUser.setFullName(document.get(USER_NAME).toString());
+        currentUser.setUserID(document.get(USER_ID).toString());
+        currentUser.setEmail(document.get(USER_email).toString());
+    }
 
     /**
      * Returns current Firebase User
      */
     static public FirebaseUser getCurrentFirebaseUser() {
-        return currentUser;
+        return currentFirebaseUser;
     }
 
 

@@ -4,10 +4,9 @@ import java.util.ArrayList;
 
 public class User {
 
-    public String userID = "u000001";
-    public String firstName = "First";
-    public String lastName = "Last";
-    public String email = "email@google.com";
+    public String userID = "";
+    public String name = "";
+    public String email = "";
 
     /**
      * Gets User ID
@@ -26,35 +25,19 @@ public class User {
     }
 
     /**
-     * Gets First Name of User
-     * @return firstName
-     */
-    public String getFirstName() {
-        return firstName;
-    }
-
-    /**
-     * Sets First Name of User
-     * @param firstName First Name of User
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    /**
-     * Gets Last Name of User
+     * Gets Name of User
      * @return lastName
      */
-    public String getLastName() {
-        return lastName;
+    public String getFullName() {
+        return name;
     }
 
     /**
-     * Sets Last Name of User
-     * @param lastName last Name of User
+     * Sets Name of User
+     * @param name Name of User
      */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String name) {
+        this.name = name;
     }
 
     /**

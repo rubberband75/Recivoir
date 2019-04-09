@@ -9,7 +9,7 @@
     tools:showIn="@layout/activity_view_recipe">
 
     <TextView
-        android:id="@+id/recipeTitleView"
+        android:id="@+id/editTitleView"
         android:layout_width="184dp"
         android:layout_height="34dp"
         android:layout_marginStart="175dp"
@@ -47,11 +47,11 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="Share"
-        app:layout_constraintBaseline_toBaselineOf="@+id/backToMainButton"
-        app:layout_constraintEnd_toStartOf="@+id/backToMainButton" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/editBackButton"
+        app:layout_constraintEnd_toStartOf="@+id/editBackButton" />
 
     <Button
-        android:id="@+id/backToMainButton"
+        android:id="@+id/editBackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -68,24 +68,24 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/recipeInstructionsView"
+        app:layout_constraintBottom_toTopOf="@+id/editInstructionsView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipeTitleView" />
+        app:layout_constraintTop_toBottomOf="@+id/editTitleView" />
 
     <TextView
-        android:id="@+id/recipeInstructionsView"
+        android:id="@+id/editInstructionsView"
         android:layout_width="385dp"
         android:layout_height="163dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="52dp"
-        app:layout_constraintBottom_toTopOf="@+id/recipeNotesView"
+        app:layout_constraintBottom_toTopOf="@+id/editNotesView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/recipeNotesView"
+        android:id="@+id/editNotesView"
         android:layout_width="383dp"
         android:layout_height="136dp"
         android:layout_marginStart="15dp"

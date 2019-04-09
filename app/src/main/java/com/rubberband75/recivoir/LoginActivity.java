@@ -146,18 +146,17 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "signInWithCredential:success");
-                        FirebaseUser user = mAuth.getCurrentUser();
-//                            updateUI(user);
-                        finish();
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInWithCredential:failure", task.getException());
+                if (task.isSuccessful()) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithCredential:success");
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    finish();
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithCredential:failure", task.getException());
 //                            Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
 //                            updateUI(null);
-                    }
+                }
                 }
             });
     }

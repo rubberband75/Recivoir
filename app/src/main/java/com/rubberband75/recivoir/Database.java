@@ -257,23 +257,4 @@ public class Database {
         return recipes;
     }
 
-    static public void logPublic(){
-        Task<QuerySnapshot> task = db.collection(COLLECTION_RECIPES).whereEqualTo("isPublic", true).get();
-
-            task.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, "getPublicRecipes:" + document.getId() + " => " + document.getData().get("title"));
-                    }
-                } else {
-                    Log.w(TAG, "Error getting documents.", task.getException());
-                }
-            }
-        });
-    }
-
-
-
 }

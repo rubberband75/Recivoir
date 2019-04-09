@@ -1,5 +1,6 @@
 package com.rubberband75.recivoir;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,21 +64,14 @@ public class AddRecipeActivity extends AppCompatActivity {
             return;
         }
 
-        Map<String, Object> recipe = new HashMap<>();
-        recipe.put(TITLE_KEY, titleText);
-        recipe.put(INGREDIENTS_KEY, ingredientsText);
-        recipe.put(STEPS_KEY, stepsText);
-        recipe.put(NOTES_KEY, notesText);
-        recipe.put(FIRESTORE_COLLECTION, publicStatus);
-
-
         Toast.makeText(this, "Saving Recipe", Toast.LENGTH_SHORT).show();
 
-        db.collection(FIRESTORE_COLLECTION)
-                .add(recipe)
+        final Context context = this;
+        Database.saveRecipe(titleText, ingredientsText, stepsText, notesText, publicStatus)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(context, "Recipe Saved", Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                         finish();
                     }
@@ -85,6 +79,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "An Error Occured", Toast.LENGTH_SHORT).show();
                         Log.w(TAG, "Error adding document", e);
                     }
                 });

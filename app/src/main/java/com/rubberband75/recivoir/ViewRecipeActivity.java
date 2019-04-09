@@ -22,6 +22,7 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_recipe);
+
 //        Toolbar toolbar = findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 //
@@ -76,11 +77,17 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
     public void onClick (View view) {
         switch (view.getId()) {
             case R.id.editRecipeButton:
-                
+                Intent editScreen = new Intent(getApplicationContext(),EditRecipeActivity.class)
+                editScreen.putExtra();
+                editScreen.putExtra();
+                editScreen.putExtra();
+                editScreen.putExtra();
                 break;
             case R.id.deleteRecipeButton:
                 break;
             case R.id.editBackButton:
+                Intent backScreen = new Intent(this, RecipeListActivity.class);
+                startActivity(backScreen);
                 break;
         }
     }

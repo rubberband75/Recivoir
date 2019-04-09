@@ -17,7 +17,7 @@ public class Recipe {
     public String notes = "";
     public Boolean isPublic = false;
     public String authorID = "";
-    public String authonName = "";
+    public String authorName = "";
 
     /**
      * Recipe Constructor
@@ -39,7 +39,7 @@ public class Recipe {
         this.notes = document.get(Database.RECIPE_NOTES_KEY).toString();
         this.isPublic = (boolean) document.get(Database.RECIPE_IS_PUBLIC_KEY);
         this.authorID = document.get(Database.RECIPE_AUTHOR_KEY).toString();
-        this.authonName = document.get(Database.RECIPE_AUTHOR_NAME_KEY).toString();
+        this.authorName = document.get(Database.RECIPE_AUTHOR_NAME_KEY).toString();
     }
 
 
@@ -156,11 +156,11 @@ public class Recipe {
     /**
      * @return
      */
-    public String getAuthonName() { return authonName; }
+    public String getAuthorName() { return authorName; }
 
 
     /**
-     * @param authonName
+     * @param authorName
      */
-    public void setAuthonName(String authonName) { this.authonName = authonName; }
+    public void setAuthorName(String authorName) { this.authorName = authorName; }
 }

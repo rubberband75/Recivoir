@@ -28,23 +28,9 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_recipe);
 
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         edit = (Button) findViewById(R.id.editRecipeButton);
         edit.setOnClickListener(this);
-
-        delete = (Button) findViewById(R.id.deleteRecipeButton);
-        delete.setOnClickListener(this);
 
         back = (Button) findViewById(R.id.editBackButton);
         back.setOnClickListener(this);
@@ -113,8 +99,6 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
                 editScreen.putExtra(Database.RECIPE_ID_KEY, currentRecipe.getRecipeID());
 
                 startActivity(editScreen);
-                break;
-            case R.id.deleteRecipeButton:
                 break;
             case R.id.editBackButton:
                 finish();

@@ -66,10 +66,10 @@ public class EditRecipeActivity extends AppCompatActivity implements View.OnClic
     public void onClick (View view) {
         switch (view.getId()) {
             case R.id.editSaveButton:
-                input.setTitle(editTitle);
-                input.setIngredients(editIngredients);
-                input.setSteps(editSteps);
-                input.setNotes(editNotes);
+//                input.setTitle(editTitle);
+//                input.setIngredients(editIngredients);
+//                input.setSteps(editSteps);
+//                input.setNotes(editNotes);
                 break;
             case R.id.editDeleteButton:
                 break;

@@ -37,6 +37,7 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
 
         Intent incomingIntent = getIntent();
         String recipeID = incomingIntent.getStringExtra("recipeID");
+        Log.d(TAG, "recipe ID:" + recipeID);
 
         Database.getRecipe(recipeID).addOnSuccessListener(new  OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -67,7 +68,7 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
         edit = (Button) findViewById(R.id.editRecipeButton);
         edit.setOnClickListener(this);
 
-        delete = (Button) findViewById(R.id.editDeleteButton);
+        delete = (Button) findViewById(R.id.deleteRecipeButton);
         delete.setOnClickListener(this);
 
         back = (Button) findViewById(R.id.editBackButton);

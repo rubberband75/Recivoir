@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FriendsRecipesActivity"></activity>
+        <activity android:name=".AddFriends"></activity>
+        <activity android:name=".ViewFriendsRecipes" />
+        <activity android:name=".FriendsRecipesActivity" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
@@ -32,7 +34,7 @@
         <activity
             android:name=".CustomAdapter"
             android:label="@string/title_activity_custom_adapter"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main2"

@@ -1,5 +1,6 @@
 package com.rubberband75.recivoir;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,13 +17,14 @@ public class EditRecipeActivity extends AppCompatActivity implements View.OnClic
     Button editDelete;
     Button editBack;
 
-    public EditRecipeActivity(Recipe input){
-        new Recipe output = input;
-        editTitle = input.getTitle();
-        editIngredients = input.getIngredients();
-        editSteps = input.getSteps();
-        editNotes = input.getNotes();
-    }
+//    public EditRecipeActivity(Recipe input){
+//        new Recipe output = input;
+//        editTitle = input.getTitle();
+//        editIngredients = input.getIngredients();
+//        editSteps = input.getSteps();
+//        editNotes = input.getNotes();
+//    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +35,23 @@ public class EditRecipeActivity extends AppCompatActivity implements View.OnClic
         EditText editStepsText = (EditText) findViewById(R.id.editRecipeSteps);
         EditText editNotesText = (EditText) findViewById(R.id.editRecipeNotes);
 
-        editTitleText.setText(editTitle);
-        editIngredientsText.setText(editIngredients);
-        editStepsText.setText(editSteps);
-        editNotesText.setText(editNotes);
+        Intent intent = getIntent();
+        Bundle bd = intent.getExtras();
+
+        if(bd != null)
+        {
+            editTitle = (String) bd.get("RECIPE_TITLE");
+            editTitleText.setText(editTitle);
+            editIngredients = (String) bd.get("RECIPE_INGREDIENTS");
+            editIngredientsText.setText(editIngredients);
+            editSteps = (String) bd.get("RECIPE_INSTRUCTIONS");
+            editStepsText.setText(editSteps);
+            editNotes = (String) bd.get("RECIPE_NOTES");
+            editNotesText.setText(editNotes);
+        }
+
+
+
 
         editSave = (Button) findViewById(R.id.editSaveButton);
         editSave.setOnClickListener(this);

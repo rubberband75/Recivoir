@@ -34,6 +34,7 @@ public class Database {
     public static final String USER_friends = "friends";
 
     public static final String COLLECTION_RECIPES = "recipes";
+    public static final String RECIPE_ID_KEY = "recipeID";
     public static final String RECIPE_TITLE_KEY = "title";
     public static final String RECIPE_INGREDIENTS_KEY = "ingredients";
     public static final String RECIPE_STEPS_KEY = "steps";
@@ -153,7 +154,16 @@ public class Database {
      * @param notes Notes for recipe
      * @param isPublic Public setting of recipe
      */
-    static public void editRecipe(String recipeID, String title, String ingredients, String steps, String notes, Boolean isPublic) {}
+    static public Task editRecipe(String recipeID, String title, String ingredients, String steps, String notes, Boolean isPublic) {
+
+        return db.collection(COLLECTION_RECIPES).document(recipeID).update(
+            RECIPE_TITLE_KEY, title,
+            RECIPE_INGREDIENTS_KEY, ingredients,
+            RECIPE_STEPS_KEY, steps,
+            RECIPE_NOTES_KEY, notes,
+            RECIPE_IS_PUBLIC_KEY, isPublic
+        );
+    }
 
 
     /**

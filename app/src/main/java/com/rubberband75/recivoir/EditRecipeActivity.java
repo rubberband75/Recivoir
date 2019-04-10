@@ -3,16 +3,23 @@ package com.rubberband75.recivoir;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+
 public class EditRecipeActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String TAG = "[Recivoir]EditRecipe:";
 
     String editTitle;
     String editIngredients;
     String editSteps;
     String editNotes;
+    Boolean editIsPublic;
     Button editSave;
     Button editDelete;
     Button editBack;
@@ -34,6 +41,7 @@ public class EditRecipeActivity extends AppCompatActivity implements View.OnClic
         EditText editIngredientsText = (EditText) findViewById(R.id.editRecipeIngredients);
         EditText editStepsText = (EditText) findViewById(R.id.editRecipeSteps);
         EditText editNotesText = (EditText) findViewById(R.id.editRecipeNotes);
+        CheckBox editIsPublicCheck = (CheckBox) findViewById(R.id.editIsPublic);
 
         Intent intent = getIntent();
         Bundle bd = intent.getExtras();
@@ -48,9 +56,9 @@ public class EditRecipeActivity extends AppCompatActivity implements View.OnClic
             editStepsText.setText(editSteps);
             editNotes = (String) bd.get("RECIPE_NOTES");
             editNotesText.setText(editNotes);
+            editIsPublic = (Boolean) bd.get(Database.RECIPE_IS_PUBLIC_KEY);
+            editIsPublicCheck.setChecked(editIsPublic);
         }
-
-
 
 
         editSave = (Button) findViewById(R.id.editSaveButton);
@@ -66,16 +74,31 @@ public class EditRecipeActivity extends AppCompatActivity implements View.OnClic
     public void onClick (View view) {
         switch (view.getId()) {
             case R.id.editSaveButton:
-//                input.setTitle(editTitle);
-//                input.setIngredients(editIngredients);
-//                input.setSteps(editSteps);
-//                input.setNotes(editNotes);
+                saveRecipe();
                 break;
             case R.id.editDeleteButton:
                 break;
             case R.id.editBackButton:
+                finish();
                 break;
         }
+    }
+
+    private void saveRecipe() {
+        String recipeID = getIntent().getStringExtra(Database.RECIPE_ID_KEY);
+        String title = ((EditText)findViewById(R.id.editRecipeTitle)).getText().toString();
+        String ingredients = ((EditText)findViewById(R.id.editRecipeIngredients)).getText().toString();
+        String steps = ((EditText) findViewById(R.id.editRecipeSteps)).getText().toString();
+        String notes = ((EditText) findViewById(R.id.editRecipeNotes)).getText().toString();
+        Boolean isPublic = ((CheckBox) findViewById(R.id.editIsPublic)).isChecked();
+
+        Database.editRecipe(recipeID, title, ingredients, steps, notes, isPublic).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "DocumentSnapshot successfully updated!");
+                finish();
+            }
+        });
     }
 
 }

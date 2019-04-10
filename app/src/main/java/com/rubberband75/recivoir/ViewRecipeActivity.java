@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -17,6 +18,8 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
     Button edit;
     Button delete;
     Button back;
+
+    Recipe currentRecipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,20 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
 //            }
 //        });
 
+        edit = (Button) findViewById(R.id.editRecipeButton);
+        edit.setOnClickListener(this);
+
+        delete = (Button) findViewById(R.id.deleteRecipeButton);
+        delete.setOnClickListener(this);
+
+        back = (Button) findViewById(R.id.editBackButton);
+        back.setOnClickListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         Intent incomingIntent = getIntent();
         String recipeID = incomingIntent.getStringExtra("recipeID");
         Log.d(TAG, "recipe ID:" + recipeID);
@@ -44,6 +61,7 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
                 Recipe recipe = new Recipe(documentSnapshot);
+                currentRecipe = recipe;
                 Log.d(TAG, "onSuccess: " + recipe.getRecipeID() + " | " + recipe.getTitle());
 
                 String titleText = recipe.getTitle();
@@ -65,15 +83,8 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-        edit = (Button) findViewById(R.id.editRecipeButton);
-        edit.setOnClickListener(this);
-
-        delete = (Button) findViewById(R.id.deleteRecipeButton);
-        delete.setOnClickListener(this);
-
-        back = (Button) findViewById(R.id.editBackButton);
-        back.setOnClickListener(this);
     }
+
 
     public void onClick (View view) {
         switch (view.getId()) {
@@ -87,6 +98,11 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
                 editScreen.putExtra("RECIPE_INSTRUCTIONS", instructions.getText());
                 TextView notes = findViewById(R.id.editNotesView);
                 editScreen.putExtra("RECIPE_NOTES", notes.getText());
+
+                editScreen.putExtra(Database.RECIPE_IS_PUBLIC_KEY, currentRecipe.getIsPublic());
+
+                editScreen.putExtra(Database.RECIPE_ID_KEY, currentRecipe.getRecipeID());
+
                 startActivity(editScreen);
                 break;
             case R.id.deleteRecipeButton:

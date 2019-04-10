@@ -54,7 +54,7 @@
     <EditText
         android:id="@+id/editRecipeIngredients"
         android:layout_width="357dp"
-        android:layout_height="124dp"
+        android:layout_height="125dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="25dp"
@@ -68,7 +68,7 @@
     <EditText
         android:id="@+id/editRecipeSteps"
         android:layout_width="355dp"
-        android:layout_height="182dp"
+        android:layout_height="125dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="25dp"
@@ -79,21 +79,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editRecipeIngredients"
-        app:layout_constraintVertical_bias="0.593" />
+        app:layout_constraintVertical_bias="0.241" />
 
     <EditText
         android:id="@+id/editRecipeNotes"
         android:layout_width="355dp"
-        android:layout_height="169dp"
+        android:layout_height="125dp"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="136dp"
         android:ems="10"
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/editDeleteButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/editIsPublic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:text="Available to Public?"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editRecipeNotes" />
 
 </android.support.constraint.ConstraintLayout>
 

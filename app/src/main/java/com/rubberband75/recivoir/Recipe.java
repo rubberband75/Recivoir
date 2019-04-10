@@ -163,4 +163,7 @@ public class Recipe {
      * @param authorName
      */
     public void setAuthorName(String authorName) { this.authorName = authorName; }
+
+
+    public String toString() { return this.title; }
 }

@@ -78,10 +78,14 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
         switch (view.getId()) {
             case R.id.editRecipeButton:
                 Intent editScreen = new Intent(getApplicationContext(),EditRecipeActivity.class);
-                editScreen.putExtra("RECIPE_TITLE",title_text);
-                editScreen.putExtra(findViewById(R.id.recipeIngredientsView));
-                editScreen.putExtra(instructionsText);
-                editScreen.putExtra(notesText);
+                TextView title = findViewById(R.id.editTitleView);
+                editScreen.putExtra("RECIPE_TITLE", title.getText());
+                TextView ingredients = findViewById(R.id.recipeIngredientsView);
+                editScreen.putExtra("RECIPE_INGREDIENTS", ingredients.getText());
+                TextView instructions = findViewById(R.id.editInstructionsView);
+                editScreen.putExtra("RECIPE_INSTRUCTIONS", instructions.getText());
+                TextView notes = findViewById(R.id.editNotesView);
+                editScreen.putExtra("RECIPE_NOTES", notes.getText());
                 startActivity(editScreen);
                 break;
             case R.id.deleteRecipeButton:

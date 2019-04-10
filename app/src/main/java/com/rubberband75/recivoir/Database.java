@@ -105,11 +105,11 @@ public class Database {
 
     /**
      * Finds User by email address
-     * @return User
+     * @return Task<QuerySnapshot>
      * @param email Email of target User
      */
-    static public User findUser(String email){
-        return new User();
+    static public Task<QuerySnapshot> findUser(String email){
+        return db.collection(COLLECTION_USERS).whereEqualTo(USER_EMAIL, email).get();
     }
 
     /**
@@ -237,6 +237,23 @@ public class Database {
 
     }
 
+    /**
+     * @param userID
+     * @param friendID
+     * @param friendName
+     * @return
+     */
+    static public Task addFriend(String userID, String friendID, String friendName) {
+
+        Map<String, Object> friend = new HashMap<>();
+        friend.put("userID", friendID);
+        friend.put("name", friendName);
+
+        Task task = db.collection(COLLECTION_USERS).document(userID).collection("friends").add(friend);
+
+        return task;
+    }
+
     private static void setCurrentUser(DocumentSnapshot document){
         currentUser = new User();
         currentUser.setFullName(document.get(USER_NAME).toString());
@@ -278,7 +295,7 @@ public class Database {
 
     static public Task getMyFriends() {
         Log.d(TAG, "getMyFriends(where author == " + currentUser.getUserID()+")");
-        return db.collection(COLLECTION_USERS).whereEqualTo(RECIPE_AUTHOR_KEY, currentUser.getUserID()).get();
+        return db.collection(COLLECTION_USERS).document(currentUser.getUserID()).collection("friends").get();
     }
 
     static public ArrayList<User> getFriendsFromTask(Task<QuerySnapshot> task){

@@ -4,6 +4,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -14,29 +18,40 @@ import java.util.ArrayList;
 public class MyRecipesActivity extends AppCompatActivity {
     private static final String TAG = "[Recivoir]MyRecipes";
 
+    ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_recipes);
 
-        // Here is an example of how the Database will work
-        // First call the get___Task() function that you need
-        // Then call the addOnCompleteListener() as seen below
-        // You will
+        listView = (ListView)findViewById(R.id.recipe_listview);
+        ArrayList<Recipe> data = Database.getRecipes();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(getApplicationContext(),
+                        "Click ListItem Number " + position, Toast.LENGTH_LONG)
+                        .show();
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         Database.getMyRecipes().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 Log.d(TAG, "onComplete: getMyRecipes()");
-                //Then within this, call the appropriate get____fromTask(task) function
-                //If it's a list of recipes, it's this
-                //But there will also be one for Users
                 ArrayList<Recipe> recipes = Database.getRecipesFromTask(task);
 
                 for(Recipe r : recipes) {
-                    Log.d(TAG, "onComplete: " + r.getTitle());
+                    Log.d(TAG, "Recipe Title: " + r.getTitle());
                 }
-
             }
         });
 

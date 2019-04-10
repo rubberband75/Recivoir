@@ -58,9 +58,9 @@ public class Database {
     static public ArrayList<Recipe> getRecipes(){
         ArrayList<Recipe> docs = new ArrayList<Recipe>();
 
-        Recipe doc1 = new Recipe("Cookies", "Flour\nbaking soda\nsugar\nother stuff", "Mix and bake", "None", true);
-        Recipe doc2 = new Recipe("Grape juice", "grapes\nwater\nsugar", "Blend it all up!", "Have fun!", true);
-        Recipe doc3 = new Recipe("Bad Booze", "Grape juice\nThe Sun","Leave the Grapejuice out in the sun", "Don't actually drink this!", false);
+        Recipe doc1 = new Recipe("1234", "Cookies", "Flour\nbaking soda\nsugar\nother stuff", "Mix and bake", "None", true);
+        Recipe doc2 = new Recipe("1234","Grape juice", "grapes\nwater\nsugar", "Blend it all up!", "Have fun!", true);
+        Recipe doc3 = new Recipe("1234", "Bad Booze", "Grape juice\nThe Sun","Leave the Grapejuice out in the sun", "Don't actually drink this!", false);
 
         docs.add(doc1);
         docs.add(doc2);
@@ -284,7 +284,7 @@ public class Database {
             for (QueryDocumentSnapshot document : task.getResult()) {
                 Map<String, Object> data = document.getData();
 
-                Recipe r = new Recipe(data.get("title").toString(), data.get("ingredients").toString(), data.get("steps").toString(), data.get("notes").toString(), true);
+                Recipe r = new Recipe(document.getId(), data.get("title").toString(), data.get("ingredients").toString(), data.get("steps").toString(), data.get("notes").toString(), true);
                 recipes.add(r);
             }
         } else {

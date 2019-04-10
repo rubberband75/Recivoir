@@ -117,8 +117,7 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
             case R.id.deleteRecipeButton:
                 break;
             case R.id.editBackButton:
-                Intent backScreen = new Intent(this, RecipeListActivity.class);
-                startActivity(backScreen);
+                finish();
                 break;
         }
     }

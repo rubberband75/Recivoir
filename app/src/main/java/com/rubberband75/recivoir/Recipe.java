@@ -22,7 +22,8 @@ public class Recipe {
     /**
      * Recipe Constructor
      */
-    public Recipe(String title, String ingredients, String steps, String notes, Boolean isPublic) {
+    public Recipe(String recipeID, String title, String ingredients, String steps, String notes, Boolean isPublic) {
+        this.recipeID = recipeID;
         this.title = title;
         this.ingredients = ingredients;
         this.steps = steps;

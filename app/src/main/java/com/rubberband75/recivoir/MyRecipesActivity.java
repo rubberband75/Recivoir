@@ -1,6 +1,7 @@
 package com.rubberband75.recivoir;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,18 +34,23 @@ public class MyRecipesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_recipes);
 
-        listView = (ListView)findViewById(R.id.recipe_listview);
-        ArrayList<Recipe> data = Database.getRecipes();
+        listView = findViewById(R.id.recipe_listview);
 
 
-
+        final Context context = this;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getApplicationContext(),
-                        "Click ListItem Number " + position, Toast.LENGTH_LONG)
-                        .show();
+
+            TextView rID = (TextView) view.findViewById(R.id.recipeID);
+            String recipeID = rID.getText().toString();
+
+            Log.d(TAG, "onItemClick: " + recipeID);
+
+            Intent intent = new Intent(context, ViewRecipeActivity.class);
+            intent.putExtra("recipeID", recipeID);
+            startActivity(intent);
             }
         });
     }
@@ -90,9 +96,12 @@ public class MyRecipesActivity extends AppCompatActivity {
             }
             // Lookup view for data population
             TextView recipeTitle = (TextView) convertView.findViewById(R.id.recipeTitleRow);
+            TextView recipeID = (TextView) convertView.findViewById(R.id.recipeID);
 
             // Populate the data into the template view using the data object
             recipeTitle.setText(recipe.getTitle());
+            recipeID.setText(recipe.getRecipeID());
+            Log.d(TAG, "getView: " + recipe.getRecipeID());
 
             // Return the completed view to render on screen
             return convertView;

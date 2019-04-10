@@ -167,6 +167,15 @@ public class Database {
 
 
     /**
+     * Deletes recipe of given ID
+     * @return Recipe
+     */
+    static public Task deleteRecipe(final String recipeID) {
+        return db.collection(COLLECTION_RECIPES).document(recipeID).delete();
+    }
+
+
+    /**
      * Initializes the shared firebase connection
      * @param context
      */

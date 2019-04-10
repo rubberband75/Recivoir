@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
 
             Intent intent = new Intent(this, ViewRecipeActivity.class);
-            intent.putExtra("recipeID", "d5hEGYQ2pztaqsD9VSLt");
+            intent.putExtra("recipeID", "wrUVJ9eQKLzeQlzXtgrd");
             startActivity(intent);
 
             return true;

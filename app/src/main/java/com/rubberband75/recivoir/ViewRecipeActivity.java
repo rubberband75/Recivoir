@@ -1,5 +1,6 @@
 package com.rubberband75.recivoir;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -52,6 +54,7 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
     public void onResume() {
         super.onResume();
 
+        final Context context = this;
         Intent incomingIntent = getIntent();
         String recipeID = incomingIntent.getStringExtra("recipeID");
         Log.d(TAG, "recipe ID:" + recipeID);
@@ -60,25 +63,31 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                Recipe recipe = new Recipe(documentSnapshot);
-                currentRecipe = recipe;
-                Log.d(TAG, "onSuccess: " + recipe.getRecipeID() + " | " + recipe.getTitle());
+                if(!documentSnapshot.exists()){
+                    Toast.makeText(context, "Recipe Not Found", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(context, MainActivity.class));
 
-                String titleText = recipe.getTitle();
-                TextView titleView = findViewById(R.id.editTitleView);
-                titleView.setText(titleText);
+                } else {
+                    Recipe recipe = new Recipe(documentSnapshot);
+                    currentRecipe = recipe;
+                    Log.d(TAG, "onSuccess: " + recipe.getRecipeID() + " | " + recipe.getTitle());
 
-                String ingredientsText = recipe.getIngredients();
-                TextView ingredientsView = findViewById(R.id.recipeIngredientsView);
-                ingredientsView.setText(ingredientsText);
+                    String titleText = recipe.getTitle();
+                    TextView titleView = findViewById(R.id.editTitleView);
+                    titleView.setText(titleText);
 
-                String instructionsText = recipe.getSteps();
-                TextView instructionsView = findViewById(R.id.editInstructionsView);
-                instructionsView.setText(instructionsText);
+                    String ingredientsText = recipe.getIngredients();
+                    TextView ingredientsView = findViewById(R.id.recipeIngredientsView);
+                    ingredientsView.setText(ingredientsText);
 
-                String notesText = recipe.getNotes();
-                TextView notesView = findViewById(R.id.editNotesView);
-                notesView.setText(notesText);
+                    String instructionsText = recipe.getSteps();
+                    TextView instructionsView = findViewById(R.id.editInstructionsView);
+                    instructionsView.setText(instructionsText);
+
+                    String notesText = recipe.getNotes();
+                    TextView notesView = findViewById(R.id.editNotesView);
+                    notesView.setText(notesText);
+                }
 
             }
         });

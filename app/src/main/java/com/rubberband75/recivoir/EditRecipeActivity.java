@@ -1,5 +1,6 @@
 package com.rubberband75.recivoir;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -20,6 +22,7 @@ public class EditRecipeActivity extends AppCompatActivity implements View.OnClic
     String editSteps;
     String editNotes;
     Boolean editIsPublic;
+
     Button editSave;
     Button editDelete;
     Button editBack;
@@ -77,6 +80,8 @@ public class EditRecipeActivity extends AppCompatActivity implements View.OnClic
                 saveRecipe();
                 break;
             case R.id.editDeleteButton:
+                Log.d(TAG, "onClick: delete");
+                deleteRecipe();
                 break;
             case R.id.editBackButton:
                 finish();
@@ -97,6 +102,20 @@ public class EditRecipeActivity extends AppCompatActivity implements View.OnClic
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "DocumentSnapshot successfully updated!");
                 finish();
+            }
+        });
+    }
+
+    private void deleteRecipe() {
+        final Context context = this;
+        String recipeID = getIntent().getStringExtra(Database.RECIPE_ID_KEY);
+        Log.d(TAG, "deleteRecipe: " + recipeID);
+        Database.deleteRecipe(recipeID).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "Document successfully deleted!");
+                Toast.makeText(context, "Recipe Deleted", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(context, MainActivity.class));
             }
         });
     }

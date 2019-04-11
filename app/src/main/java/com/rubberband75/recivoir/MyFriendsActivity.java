@@ -1,57 +1,71 @@
 package com.rubberband75.recivoir;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 
 public class MyFriendsActivity extends AppCompatActivity {
     private static final String TAG = "[Recivoir]MyFriends";
+
+    ListView listView;
+    FriendAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_friends);
 
-        Database.getMyFriends();
+        listView = findViewById(R.id.friends_listview);
 
-//        Database.getMyFriends().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                Log.d(TAG, "onComplete: getMyFriends()");
-//                if (task.isSuccessful()) {
-//                    Log.d(TAG, "onSuccess: getMyFriends()");
-//
-//                    for (QueryDocumentSnapshot document : task.getResult()) {
-//                        Log.d(TAG, "Friend: " + document.getId());
-//                    }
-//                }
-//            }
-//        });
+        final Context context = this;
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
 
-//        Database.getMyFriends().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                Log.d(TAG, "onComplete: getMyFriends()");
-//                //Then within this, call the appropriate get____fromTask(task) function
-//                //If it's a list of recipes, it's this
-//                //But there will also be one for Users
-//                ArrayList<User> friends = Database.getFriendsFromTask(task);
-//
-//                for(User friend : friends) {
-//                    Log.d(TAG, "onComplete: " + friend.getUserID());
-//                }
-//
-//            }
-//        });
+                TextView rID = (TextView) view.findViewById(R.id.friendListItemID);
+                String recipeID = rID.getText().toString();
+
+                Log.d(TAG, "onItemClick: " + recipeID);
+
+                Intent intent = new Intent(context, ViewRecipeActivity.class);
+                intent.putExtra("recipeID", recipeID);
+                startActivity(intent);
+            }
+        });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        final Context context = this;
+        Database.getMyFriends().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot snapshots) {
+                List<User> users = Database.getUsersFromSnapshot(snapshots);
+
+                for(User user : users){
+                    Log.d(TAG, "Friend: (" + user.getDocumentID() + ") " + user.getFullName());
+                }
+
+                adapter= new FriendAdapter(context, users);
+
+                ListView listView = (ListView) findViewById(R.id.friends_listview);
+                listView.setAdapter(adapter);
+            }
+        });
+
+    }
 }

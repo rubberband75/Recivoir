@@ -295,24 +295,39 @@ public class Database {
         return recipes;
     }
 
+    /**
+     * @return
+     */
     static public Task getMyFriends() {
         Log.d(TAG, "getMyFriends(where id == " + currentUser.getUserID()+")");
         Task t =  db.collection(COLLECTION_USERS).document(currentUser.getDocumentID()).collection("friends").get();
-
-        t.addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot snapshots) {
-
-                for(DocumentSnapshot snapshot : snapshots.getDocuments()) {
-                    Log.d(TAG, "Friend: " + snapshot.get(USER_NAME));
-                }
-            }
-        });
-
-
         return t;
     }
 
+    /**
+     * @param snapshots
+     * @return
+     */
+    static public List<User> getUsersFromSnapshot(QuerySnapshot snapshots) {
+        List<User> users = new ArrayList<>();
+
+        for(DocumentSnapshot snapshot : snapshots.getDocuments()) {
+            try {
+                Log.d(TAG, "FriendName: " + snapshot.get(Database.USER_NAME));
+                User u = new User(snapshot);
+                users.add(u);
+            } catch (Exception e) {
+                Log.w(TAG, "getUsersFromSnapshot: ");
+            }
+        }
+
+        return users;
+    }
+
+    /**
+     * @param task
+     * @return
+     */
     static public ArrayList<User> getFriendsFromTask(Task<QuerySnapshot> task){
         ArrayList<User> friends = new ArrayList<>();
         if (task.isSuccessful()) {

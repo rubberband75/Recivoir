@@ -7,28 +7,28 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public  class RecipeAdapter extends ArrayAdapter<Recipe> {
-    public RecipeAdapter(Context context, ArrayList<Recipe> recipes){
-        super(context, 0, recipes);
+public  class FriendAdapter extends ArrayAdapter<User> {
+    public FriendAdapter(Context context, List<User> friends){
+        super(context, 0, friends);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        Recipe recipe = getItem(position);
+        User friend = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.recipe_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.friend_list_item, parent, false);
         }
         // Lookup view for data population
-        TextView recipeTitle = (TextView) convertView.findViewById(R.id.recipeTitleRow);
-        TextView recipeID = (TextView) convertView.findViewById(R.id.recipeItemID);
+        TextView recipeTitle = (TextView) convertView.findViewById(R.id.friendListItemName);
+        TextView recipeID = (TextView) convertView.findViewById(R.id.friendListItemID);
 
         // Populate the data into the template view using the data object
-        recipeTitle.setText(recipe.getTitle());
-        recipeID.setText(recipe.getRecipeID());
+        recipeTitle.setText(friend.getFullName());
+        recipeID.setText(friend.getDocumentID());
 
         // Return the completed view to render on screen
         return convertView;

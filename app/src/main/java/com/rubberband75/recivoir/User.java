@@ -1,5 +1,7 @@
 package com.rubberband75.recivoir;
 
+import android.util.Log;
+
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
@@ -25,7 +27,15 @@ public class User {
         this.setFullName(document.get(Database.USER_NAME).toString());
         this.setUserID(document.get(Database.USER_ID).toString());
         this.setEmail(document.get(Database.USER_EMAIL).toString());
-        this.setDocumentID(document.getId());
+
+        String documentIDStr;
+        Object documentID = document.get(Database.USER_DOC_ID);
+        if(documentID == null){
+            documentIDStr = document.getId();
+        } else {
+            documentIDStr = documentID.toString();
+        }
+        this.setDocumentID(documentIDStr);
     }
 
     /**

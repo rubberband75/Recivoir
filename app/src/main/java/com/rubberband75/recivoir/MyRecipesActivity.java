@@ -42,7 +42,7 @@ public class MyRecipesActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-            TextView rID = (TextView) view.findViewById(R.id.recipeID);
+            TextView rID = (TextView) view.findViewById(R.id.recipeItemID);
             String recipeID = rID.getText().toString();
 
             Log.d(TAG, "onItemClick: " + recipeID);

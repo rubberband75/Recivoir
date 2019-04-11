@@ -19,6 +19,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -294,8 +295,47 @@ public class Database {
     }
 
     static public Task getMyFriends() {
-        Log.d(TAG, "getMyFriends(where author == " + currentUser.getUserID()+")");
-        return db.collection(COLLECTION_USERS).document(currentUser.getUserID()).collection("friends").get();
+        Log.d(TAG, "getMyFriends(where id == " + currentUser.getUserID()+")");
+
+
+        db.collection(COLLECTION_USERS).whereEqualTo("userID", currentUser.getUserID()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot snapshots) {
+                DocumentSnapshot userdoc= snapshots.getDocuments().get(0);
+
+                Log.d(TAG, "User: " + userdoc.getId());
+
+                db.collection(COLLECTION_USERS).document(userdoc.getId()).collection("friends").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot snapshots) {
+
+                        for(DocumentSnapshot snapshot : snapshots.getDocuments()) {
+                            Log.d(TAG, "Friend: " + snapshot.getId());
+                        }
+                    }
+                });
+            }
+        });
+
+
+//        db.collection(COLLECTION_USERS).document(currentUser.getUserID()).collection("friends").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//            @Override
+//            public void onSuccess(QuerySnapshot snapshots) {
+//                Log.d(TAG, "onSuccess: getFriends()");
+//
+//                List<DocumentSnapshot> l = snapshots.getDocuments();
+//
+//                Log.d(TAG, "size: " + l.size());
+//
+//                for(DocumentSnapshot snapshot : snapshots.getDocuments()) {
+//                    Log.d(TAG, "onSuccess: " + snapshot.getId());
+//                }
+//            }
+//        });
+
+
+        Task t =  db.collection(COLLECTION_USERS).document(currentUser.getUserID()).collection("friends").get();
+        return t;
     }
 
     static public ArrayList<User> getFriendsFromTask(Task<QuerySnapshot> task){

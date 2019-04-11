@@ -280,6 +280,11 @@ public class Database {
         return db.collection(COLLECTION_RECIPES).whereEqualTo(RECIPE_AUTHOR_KEY, currentUser.getUserID()).get();
     }
 
+    static public Task getUsersRecipes(String userID){
+        Task t = db.collection(COLLECTION_RECIPES).whereEqualTo(RECIPE_AUTHOR_KEY, userID).get();
+        return t;
+    }
+
     static public ArrayList<Recipe> getRecipesFromTask(Task<QuerySnapshot> task){
         ArrayList<Recipe> recipes = new ArrayList<>();
         if (task.isSuccessful()) {
@@ -323,24 +328,4 @@ public class Database {
 
         return users;
     }
-
-    /**
-     * @param task
-     * @return
-     */
-    static public ArrayList<User> getFriendsFromTask(Task<QuerySnapshot> task){
-        ArrayList<User> friends = new ArrayList<>();
-        if (task.isSuccessful()) {
-            for (QueryDocumentSnapshot document : task.getResult()) {
-                Map<String, Object> data = document.getData();
-
-                User friend = new User();
-                friends.add(friend);
-            }
-        } else {
-            Log.w(TAG, "Error getting documents.", task.getException());
-        }
-        return friends;
-    }
-
 }

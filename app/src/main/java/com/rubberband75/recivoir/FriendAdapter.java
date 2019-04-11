@@ -28,7 +28,7 @@ public  class FriendAdapter extends ArrayAdapter<User> {
 
         // Populate the data into the template view using the data object
         recipeTitle.setText(friend.getFullName());
-        recipeID.setText(friend.getDocumentID());
+        recipeID.setText(friend.getUserID());
 
         // Return the completed view to render on screen
         return convertView;

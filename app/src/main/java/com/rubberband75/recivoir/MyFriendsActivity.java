@@ -34,13 +34,15 @@ public class MyFriendsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                TextView rID = (TextView) view.findViewById(R.id.friendListItemID);
-                String recipeID = rID.getText().toString();
+                TextView itemClickedName = (TextView) view.findViewById(R.id.friendListItemName);
+                String clickedName = itemClickedName.getText().toString();
 
-                Log.d(TAG, "onItemClick: " + recipeID);
+                TextView itemClickedID = (TextView) view.findViewById(R.id.friendListItemID);
+                String clickedID = itemClickedID.getText().toString();
 
-                Intent intent = new Intent(context, ViewRecipeActivity.class);
-                intent.putExtra("recipeID", recipeID);
+                Intent intent = new Intent(context, FriendsRecipesActivity.class);
+                intent.putExtra("userName", clickedName);
+                intent.putExtra("userID", clickedID);
                 startActivity(intent);
             }
         });

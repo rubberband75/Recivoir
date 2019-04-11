@@ -70,4 +70,8 @@ public class MyFriendsActivity extends AppCompatActivity {
         });
 
     }
+
+    public void launchSearchActivity(View view){
+        startActivity(new Intent(this, AddFriends.class));
+    }
 }

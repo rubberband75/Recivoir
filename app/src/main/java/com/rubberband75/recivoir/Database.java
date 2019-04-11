@@ -31,8 +31,8 @@ public class Database {
     public static final String USER_ID = "userID";
     public static final String USER_NAME = "name";
     public static final String USER_EMAIL = "email";
-    public static final String USER_recipes = "recipes";
-    public static final String USER_friends = "friends";
+    public static final String USER_DOC_ID = "documentID";
+    public static final String USER_COLLECTOIN_FRIENDS = "friends";
 
     public static final String COLLECTION_RECIPES = "recipes";
     public static final String RECIPE_ID_KEY = "recipeID";
@@ -200,8 +200,9 @@ public class Database {
                         user.put(USER_ID, currentFirebaseUser.getUid());
                         user.put(USER_NAME, currentFirebaseUser.getDisplayName());
                         user.put(USER_EMAIL, currentFirebaseUser.getEmail());
-                        user.put(USER_friends, new ArrayList<>());
-                        user.put(USER_recipes, new ArrayList<>());
+
+//                        user.put(USER_friends, new ArrayList<>());
+//                        user.put(USER_recipes, new ArrayList<>());
 //                        user.put("things", (new HashMap<String, Object>()).put("name", "asdf"));
 
                         db.collection(COLLECTION_USERS).add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -255,11 +256,11 @@ public class Database {
         return task;
     }
 
+    /**
+     * @param document
+     */
     private static void setCurrentUser(DocumentSnapshot document){
-        currentUser = new User();
-        currentUser.setFullName(document.get(USER_NAME).toString());
-        currentUser.setUserID(document.get(USER_ID).toString());
-        currentUser.setEmail(document.get(USER_EMAIL).toString());
+        currentUser = new User(document);
     }
 
     /**
@@ -296,45 +297,19 @@ public class Database {
 
     static public Task getMyFriends() {
         Log.d(TAG, "getMyFriends(where id == " + currentUser.getUserID()+")");
+        Task t =  db.collection(COLLECTION_USERS).document(currentUser.getDocumentID()).collection("friends").get();
 
-
-        db.collection(COLLECTION_USERS).whereEqualTo("userID", currentUser.getUserID()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        t.addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot snapshots) {
-                DocumentSnapshot userdoc= snapshots.getDocuments().get(0);
 
-                Log.d(TAG, "User: " + userdoc.getId());
-
-                db.collection(COLLECTION_USERS).document(userdoc.getId()).collection("friends").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot snapshots) {
-
-                        for(DocumentSnapshot snapshot : snapshots.getDocuments()) {
-                            Log.d(TAG, "Friend: " + snapshot.getId());
-                        }
-                    }
-                });
+                for(DocumentSnapshot snapshot : snapshots.getDocuments()) {
+                    Log.d(TAG, "Friend: " + snapshot.get(USER_NAME));
+                }
             }
         });
 
 
-//        db.collection(COLLECTION_USERS).document(currentUser.getUserID()).collection("friends").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//            @Override
-//            public void onSuccess(QuerySnapshot snapshots) {
-//                Log.d(TAG, "onSuccess: getFriends()");
-//
-//                List<DocumentSnapshot> l = snapshots.getDocuments();
-//
-//                Log.d(TAG, "size: " + l.size());
-//
-//                for(DocumentSnapshot snapshot : snapshots.getDocuments()) {
-//                    Log.d(TAG, "onSuccess: " + snapshot.getId());
-//                }
-//            }
-//        });
-
-
-        Task t =  db.collection(COLLECTION_USERS).document(currentUser.getUserID()).collection("friends").get();
         return t;
     }
 

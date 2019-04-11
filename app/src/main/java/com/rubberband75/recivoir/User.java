@@ -1,12 +1,44 @@
 package com.rubberband75.recivoir;
 
+import com.google.firebase.firestore.DocumentSnapshot;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User {
 
     public String userID = "";
     public String name = "";
     public String email = "";
+    private String documentID = "";
+
+    /**
+     * Default Constructor
+     */
+    public User(){}
+
+    /**
+     * @param document
+     */
+    public User(DocumentSnapshot document) {
+        this.setFullName(document.get(Database.USER_NAME).toString());
+        this.setUserID(document.get(Database.USER_ID).toString());
+        this.setEmail(document.get(Database.USER_EMAIL).toString());
+        this.setDocumentID(document.getId());
+    }
+
+    /**
+     * @return User object as Map
+     */
+    public Map toMap(){
+        Map<String, Object> map = new HashMap<>();
+        map.put(Database.USER_ID, this.userID);
+        map.put(Database.USER_NAME, this.name);
+        map.put(Database.USER_EMAIL, this.email);
+        map.put(Database.USER_DOC_ID, this.documentID);
+        return map;
+    }
 
     /**
      * Gets User ID
@@ -83,4 +115,18 @@ public class User {
      * @param userID  User ID of target User
      */
     public void removeFriend(String userID) {}
+
+    /**
+     * @return
+     */
+    public String getDocumentID() {
+        return documentID;
+    }
+
+    /**
+     * @param documentID
+     */
+    public void setDocumentID(String documentID) {
+        this.documentID = documentID;
+    }
 }

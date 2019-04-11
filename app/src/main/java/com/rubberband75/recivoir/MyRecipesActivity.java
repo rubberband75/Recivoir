@@ -36,7 +36,6 @@ public class MyRecipesActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.recipe_listview);
 
-
         final Context context = this;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -80,31 +79,4 @@ public class MyRecipesActivity extends AppCompatActivity {
 
     }
 
-
-    private class RecipeAdapter extends ArrayAdapter<Recipe> {
-        public RecipeAdapter(Context context, ArrayList<Recipe> recipes){
-            super(context, 0, recipes);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            // Get the data item for this position
-            Recipe recipe = getItem(position);
-            // Check if an existing view is being reused, otherwise inflate the view
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.recipe_item, parent, false);
-            }
-            // Lookup view for data population
-            TextView recipeTitle = (TextView) convertView.findViewById(R.id.recipeTitleRow);
-            TextView recipeID = (TextView) convertView.findViewById(R.id.recipeID);
-
-            // Populate the data into the template view using the data object
-            recipeTitle.setText(recipe.getTitle());
-            recipeID.setText(recipe.getRecipeID());
-            Log.d(TAG, "getView: " + recipe.getRecipeID());
-
-            // Return the completed view to render on screen
-            return convertView;
-        }
-    }
 }

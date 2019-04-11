@@ -1,9 +1,15 @@
 package com.rubberband75.recivoir;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -16,31 +22,57 @@ import java.util.ArrayList;
 public class FindRecipesActivity extends AppCompatActivity {
     private static final String TAG = "[Recivoir]MainActivity:";
 
+    ListView listView;
+    RecipeAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_recipes);
 
-        // Here is an example of how the Database will work
-        // First call the get___Task() function that you need
-        // Then call the addOnCompleteListener() as seen below
-        // You will
+        listView = findViewById(R.id.recipe_listview);
+
+        final Context context = this;
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                TextView rID = (TextView) view.findViewById(R.id.recipeID);
+                String recipeID = rID.getText().toString();
+
+                Log.d(TAG, "onItemClick: " + recipeID);
+
+                Intent intent = new Intent(context, ViewRecipeActivity.class);
+                intent.putExtra("recipeID", recipeID);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        final Context context = this;
 
         Database.getPublicRecipesTask().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                //Then within this, call the appropriate get____fromTask(task) function
-                //If it's a list of recipes, it's this
-                //But there will also be one for Users
+                Log.d(TAG, "onComplete: getMyRecipes()");
                 ArrayList<Recipe> recipes = Database.getRecipesFromTask(task);
 
                 for(Recipe r : recipes) {
-                    Log.d(TAG, "onComplete: " + r.getTitle());
+                    Log.d(TAG, "Recipe Title: " + r.getTitle());
                 }
 
+                adapter= new RecipeAdapter(context, recipes);
+
+                ListView listView = (ListView) findViewById(R.id.recipe_listview);
+                listView.setAdapter(adapter);
             }
         });
-
 
     }
 }

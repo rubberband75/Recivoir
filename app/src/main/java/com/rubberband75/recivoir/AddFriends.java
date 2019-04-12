@@ -58,9 +58,29 @@ public class AddFriends extends AppCompatActivity {
                     List<User> users = Database.getUsersFromSnapshot(snapshots);
 
                     if(!users.isEmpty()) {
-                        User user = users.get(0);
+                        final User user = users.get(0);
                         Log.d(TAG, "Adding Friend: " + user.getFullName());
 
+                        Database.getMyFriends(email).addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot snapshots) {
+                                List<User> matchingFriends = Database.getUsersFromSnapshot(snapshots);
+
+                                if(!matchingFriends.isEmpty()){
+                                    searchButton.setEnabled(true);
+                                    resultText.setText("Already Added");
+                                    Log.d(TAG, "Friend Already Exists");
+                                } else {
+                                    Toast.makeText(AddFriends.this, "Addding Friend: " + email, Toast.LENGTH_SHORT).show();
+                                    Database.addFriend(user).addOnSuccessListener(new OnSuccessListener() {
+                                        @Override
+                                        public void onSuccess(Object o) {
+                                            finish();
+                                        }
+                                    });
+                                }
+                            }
+                        });
 
 
 

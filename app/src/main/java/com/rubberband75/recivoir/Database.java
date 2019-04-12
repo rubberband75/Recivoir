@@ -239,19 +239,16 @@ public class Database {
 
     }
 
+
     /**
-     * @param userID
-     * @param friendID
-     * @param friendName
+     * @param user
      * @return
      */
-    static public Task addFriend(String userID, String friendID, String friendName) {
+    static public Task addFriend(User user) {
 
-        Map<String, Object> friend = new HashMap<>();
-        friend.put("userID", friendID);
-        friend.put("name", friendName);
+        Map<String, Object> friend = user.toMap();
 
-        Task task = db.collection(COLLECTION_USERS).document(userID).collection("friends").add(friend);
+        Task task = db.collection(COLLECTION_USERS).document(getCurrentUser().getDocumentID()).collection(USER_COLLECTOIN_FRIENDS).add(friend);
 
         return task;
     }
@@ -306,6 +303,15 @@ public class Database {
     static public Task getMyFriends() {
         Log.d(TAG, "getMyFriends(where id == " + currentUser.getUserID()+")");
         Task t =  db.collection(COLLECTION_USERS).document(currentUser.getDocumentID()).collection("friends").get();
+        return t;
+    }
+
+    /**
+     * @return
+     */
+    static public Task getMyFriends(String email) {
+        Log.d(TAG, "getMyFriends(where id == " + currentUser.getUserID()+")");
+        Task t =  db.collection(COLLECTION_USERS).document(currentUser.getDocumentID()).collection("friends").whereEqualTo(USER_EMAIL, email).get();
         return t;
     }
 

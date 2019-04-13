@@ -1,9 +1,10 @@
 # Recivoir
 
-We can mess with this for week 7 stuff...
+## An android app to organize and share recipes
 
-White yet equal power!
+Final project for CS 246, Team 9
 
-Human History Month!
-
-Tasty tasy shrimp, none of which I've licked
+Written by:
+* Chandler Childs
+* Michael Mitchell
+* Samuel Castillo
